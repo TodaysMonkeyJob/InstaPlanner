@@ -2,7 +2,8 @@ from time import sleep
 
 from selenium.webdriver.common.by import By
 
-from constans import SMALL_PAUSE, NEW_POST, SELECT_PHOTO, MEDIUM_PAUSE, NEW_POST_NEXT, NEW_POST_SHARE
+from constans import SMALL_PAUSE, NEW_POST, SELECT_PHOTO, MEDIUM_PAUSE, NEW_POST_NEXT, NEW_POST_SHARE, TEST_PHOTO, \
+    CLOSE_POST_SHARING
 
 
 class NewPost:
@@ -18,22 +19,28 @@ class NewPost:
         new_post_button.click()
 
     def add_new_photo(self):
+        self.set_photo()
+        sleep(2)
+        self.share_photo()
+        sleep(5)
+        self.close_post_sharing()
+
+    def set_photo(self):
         try:
             self.browser.implicitly_wait(self.medium_pause)
             add_photo_button = self.browser.find_element(By.XPATH, SELECT_PHOTO)
-            add_photo_button.send_keys('/home/oleh/PyProjects/instaPlanner/test_photos/IMG_1355.JPG')
+            add_photo_button.send_keys(TEST_PHOTO)
         except Exception as exception:
             print(exception)
-        # import ipdb;
-        # ipdb.set_trace()
+        next_photo_button = self.browser.find_element(By.XPATH, NEW_POST_NEXT)
+        next_photo_button.click()
+        next_photo_button = self.browser.find_element(By.XPATH, NEW_POST_NEXT)
+        next_photo_button.click()
 
-        self.browser.implicitly_wait(self.medium_pause)
-        next_photo_button = self.browser.find_element(By.XPATH, NEW_POST_NEXT)
-        next_photo_button.click()
-        next_photo_button = self.browser.find_element(By.XPATH, NEW_POST_NEXT)
-        next_photo_button.click()
-        sleep(2)
+    def share_photo(self):
         share_photo_button = self.browser.find_element(By.XPATH, NEW_POST_SHARE)
         share_photo_button.click()
-        sleep(50)
 
+    def close_post_sharing(self):
+        close_button = self.browser.find_element(By.XPATH, CLOSE_POST_SHARING)
+        close_button.click()

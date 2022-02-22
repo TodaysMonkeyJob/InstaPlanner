@@ -4,12 +4,14 @@ INSTAGRAM_LOGIN = 'https://www.instagram.com/accounts/login/'
 
 # USER CREDENTIAL
 USERNAME = "blck_n_brwn"
-PASSWORD = "Oleh1601."
+PASSWORD = "Oleh1601,"
 
 # SECONDS PAUSE
 SMALL_PAUSE = 5
 MEDIUM_PAUSE = 15
 LARGE_PAUSE = 30
+
+TEST_PHOTO = '/home/oleh/PyProjects/instaPlanner/test_photos/IMG_1355.JPG'
 
 # INSTAGRAM XPATH
 USERNAME_XPATH = '//*[@id="loginForm"]/div/div[1]/div/label/input'
@@ -24,3 +26,4 @@ NEW_POST = '//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[3]/d
 NEW_POST_NEXT = '/html/body/div[6]/div[2]/div/div/div/div[1]/div/div/div[2]/div/button'
 NEW_POST_SHARE = '/html/body/div[6]/div[2]/div/div/div/div[1]/div/div/div[2]/div/button'
 SELECT_PHOTO = '/html/body/div[8]/div[2]/div/div/div/div[2]/div[1]/form/input'
+CLOSE_POST_SHARING = '/html/body/div[6]/div[1]/button'
