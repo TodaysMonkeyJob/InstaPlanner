@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block mycontent %}
+
+<style>
+button.add-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 27px;
+
+    position: absolute;
+    width: 205px;
+    height: 60px;
+    left:calc(50% - 100px);
+    top: 365px;
+
+    background: #839B97;
+    border-radius: 10px;
+}
+
+a.add-profile{
+    position: static;
+    width: 150px;
+    height: 35px;
+    font-family: Abhaya Libre;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+</style>
+
+<h1 class="profile" >Active profiles</h1>
+<div>
+    <h3 class="profile-filter">Filters</h3>
+</div>
+<div>
+    <h3 class="profile-view">View</h3>
+    <button class="image-grid" type="button">
+        <img src="https://www.pinclipart.com/picdir/big/163-1630820_grid-comments-grid-icon-free-clipart.png" height ="25" width="25"/>
+    </button>
+    <button class="image-list" type="button">
+        <img src="https://cdn-icons-png.flaticon.com/512/151/151917.png" height ="30" width="30"/>
+    </button>
+</div>
+
+<h1 class="central-text" >There are no active profiles at the moment
+Please press button to add Intagram profile</h1>
+<button class="add-profile" type="button">
+    <a class="add-profile" href="{{ url_for('profile.index') }}">Add Profile</a></li>
+</button>
+
+
+
+{% endblock %}
+
+{%- block scripts -%}
+    <script src="{{ url_for('static',filename='js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+{%- endblock scripts -%}

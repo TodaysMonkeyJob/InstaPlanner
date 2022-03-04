@@ -3,3 +3,6 @@ venv
 __pycache__/
 /test_photos
 /cookies
+app.db
+/cookies
+/json_format
