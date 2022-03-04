@@ -107,33 +107,42 @@ a.navbar-brand{
     color: #34626C;
 
 }
-div.input-groups{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 9px 10px 9px 27px;
-
-    position: absolute;
-    width: 430px;
-    left:calc(50% - 215px);
-
-}
 
 .form-control{
     font-family: Abhaya Libre;
     font-style: normal;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 18px;
     line-height: 14px;
-
     color: rgba(51, 68, 102, 0.7);
+    background: #EEEEEE;
+    position: relative;
+}
+
+.form-controls{
+    top: 12px;
+    height: 35px;
+    width: 430px;
+    left:calc(50% - 215px);
+
+    padding-left: 45px;
+
+    font-family: Abhaya Libre;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
     background: #EEEEEE;
     background-image: url('https://pngpart.com/images/bt/google-search-icon-12.png');
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: left center;
+    border-radius: 20px;
+    border-color: #EEEEEE;
+
     position: relative;
 }
+
+
 
 .Site-content {
     -webkit-box-flex: 1 0 auto;
