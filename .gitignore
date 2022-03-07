@@ -6,3 +6,5 @@ __pycache__/
 app.db
 /cookies
 /json_format
+/app/json_data
+/app/static/img

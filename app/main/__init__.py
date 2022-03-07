@@ -10,4 +10,4 @@ def load_user(id):
 
 from .index import main
 from .auth import auth
-from .profile import alcohol
+from .profile import profile

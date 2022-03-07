@@ -27,9 +27,9 @@ a.add-profile{
     font-weight: bold;
     font-size: 30px;
     text-align: center;
-
     color: #FFFFFF;
 }
+
 
 
 
@@ -51,8 +51,8 @@ a.add-profile{
 
 <h1 class="central-text" >There are no active profiles at the moment
 Please press button to add Intagram profile</h1>
-<button class="add-profile" type="button">
-    <a class="add-profile" href="{{ url_for('profile.index') }}">Add Profile</a></li>
+<button class="add-profile" type="button" onclick = 'f=window.open(href="{{ url_for("profile.add_profile") }}","fenetre","the style (without style tag, example - width=450, height=550, no px")'style="cursor: pointer;">
+    <a class="add-profile" >Add Profile</a>
 </button>
 
 

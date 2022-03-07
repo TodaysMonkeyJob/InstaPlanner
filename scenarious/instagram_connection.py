@@ -1,6 +1,6 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
-from user_login import LoginPage
+from scenarious.user_login import LoginPage
 from constans import INSTAGRAM_LOGIN
 import pickle
 

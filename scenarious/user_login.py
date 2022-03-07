@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 from constans import USERNAME, PASSWORD, SMALL_PAUSE, USERNAME_XPATH, PASSWORD_XPATH, LOGIN_BUTTON
-from new_post import NewPost
-from tab_controller import HomePage
+from scenarious.get_profile_info import GetUserInfo
 
 
 class LoginPage:
@@ -25,4 +24,4 @@ class LoginPage:
     def log_in(self):
         login_button = self.browser.find_element(By.XPATH, LOGIN_BUTTON)
         login_button.click()
-        return NewPost(self.browser)
+        return GetUserInfo(self.browser)

@@ -51,43 +51,11 @@ class User(UserMixin, db.Model):
     def is_administrator(self):
         return self.can(Permission.ADMINISTER)
 
-    logs = db.relationship('Log',
-                           backref=db.backref('user', lazy='joined'),
-                           lazy='dynamic',
-                           cascade='all, delete-orphan')
 
-    comments = db.relationship('Comment',
-                               backref=db.backref('user', lazy='joined'),
-                               lazy='dynamic',
-                               cascade='all, delete-orphan')
 
     def __repr__(self):
         return '<User %r>' % self.email
 
-    def purchase(self, alcohol):
-        return self.logs.filter_by(alcohol_id=alcohol.id, returned=0).first()
-
-    def can_buy_alcohol(self):
-        return self.logs.filter(Log.returned == 0, Log.return_timestamp < datetime.now()).count() == 0
-
-    def buy_alcohol(self, alcohol):
-        if self.logs.filter(Log.returned == 0, Log.return_timestamp < datetime.now()).count() > 0:
-            return False, u"Unable to buy, you have overdue alcohols that have not been returned"
-        if self.purchase(alcohol):
-            return False, u'It looks like you have already purchased this profile!!'
-        if not alcohol.can_buy():
-            return False, u'This profile is too popular, we no longer have the collection, please wait for someone to return it and buy it later'
-
-        db.session.add(Log(self, alcohol))
-        return True, u'You successfully GET a copy %s' % alcohol.title
-
-    def return_alcohol(self, log):
-        if log.returned == 1 or log.user_id != self.id:
-            return False, u'This record was not found'
-        log.returned = 1
-        log.return_timestamp = datetime.now()
-        db.session.add(log)
-        return True, u'You returned a copy %s' % log.alcohol.title
 
     def avatar_url(self, _external=False):
         if self.avatar:
@@ -124,14 +92,14 @@ lm.anonymous_user = AnonymousUser
 
 
 class Permission(object):
-    RETURN_ALCOHOL = 0x01
-    BUY_ALCOHOL = 0x02
+    RETURN_PROFILE = 0x01
+    BUY_PROFILE = 0x02
     WRITE_COMMENT = 0x04
     DELETE_OTHERS_COMMENT = 0x08
     UPDATE_OTHERS_INFORMATION = 0x10
-    UPDATE_ALCOHOL_INFORMATION = 0x20
-    ADD_ALCOHOL = 0x40
-    DELETE_ALCOHOL = 0x80
+    UPDATE_PROFILE_INFORMATION = 0x20
+    ADD_PROFILE = 0x40
+    DELETE_PROFILE = 0x80
     ADMINISTER = 0x100
 
 
@@ -146,11 +114,11 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': (Permission.RETURN_ALCOHOL |
-                     Permission.BUY_ALCOHOL |
+            'User': (Permission.RETURN_PROFILE |
+                     Permission.BUY_PROFILE |
                      Permission.WRITE_COMMENT, True),
-            'Moderator': (Permission.RETURN_ALCOHOL |
-                          Permission.BUY_ALCOHOL |
+            'Moderator': (Permission.RETURN_PROFILE |
+                          Permission.BUY_PROFILE |
                           Permission.WRITE_COMMENT |
                           Permission.DELETE_OTHERS_COMMENT, False),
             'Administrator': (0x1ff, False)
@@ -168,8 +136,8 @@ class Role(db.Model):
         return '<Role %r>' % self.name
 
 
-class Alcohol(db.Model):
-    __tablename__ = 'alcohols'
+class Profile(db.Model):
+    __tablename__ = 'profile'
     id = db.Column(db.Integer, primary_key=True)
     isbn = db.Column(db.String(16), unique=True)
     title = db.Column(db.String(128))
@@ -185,38 +153,7 @@ class Alcohol(db.Model):
     catalog_html = db.deferred(db.Column(db.Text))
     hidden = db.Column(db.Boolean, default=0)
 
-    logs = db.relationship('Log',
-                           backref=db.backref('profile', lazy='joined'),
-                           lazy='dynamic',
-                           cascade='all, delete-orphan')
 
-    comments = db.relationship('Comment', backref='profile',
-                               lazy='dynamic',
-                               cascade='all, delete-orphan')
-
-    @property
-    def tags_string(self):
-        return ",".join([tag.name for tag in self.tags.all()])
-
-    @tags_string.setter
-    def tags_string(self, value):
-        self.tags = []
-        tags_list = value.split(u',')
-        for str in tags_list:
-            tag = Tag.query.filter(Tag.name.ilike(str)).first()
-            if tag is None:
-                tag = Tag(name=str)
-
-            self.tags.append(tag)
-
-        db.session.add(self)
-        db.session.commit()
-
-    def can_buy(self):
-        return (not self.hidden) and self.can_buy_number() > 0
-
-    def can_buy_number(self):
-        return self.numbers - Log.query.filter_by(alcohol_id=self.id, returned=0).count()
 
     @staticmethod
     def on_changed_summary(target, value, oldvalue, initiaor):
@@ -235,66 +172,9 @@ class Alcohol(db.Model):
                          tags=allowed_tags, strip=True))
 
     def __repr__(self):
-        return u'<Alcohol %r>' % self.title
+        return u'<Profile %r>' % self.title
 
 
-db.event.listen(Alcohol.summary, 'set', Alcohol.on_changed_summary)
-db.event.listen(Alcohol.catalog, 'set', Alcohol.on_changed_catalog)
+db.event.listen(Profile.summary, 'set', Profile.on_changed_summary)
+db.event.listen(Profile.catalog, 'set', Profile.on_changed_catalog)
 
-
-class Log(db.Model):
-    __tablename__ = 'logs'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    alcohol_id = db.Column(db.Integer, db.ForeignKey('alcohols.id'))
-    buy_timestamp = db.Column(db.DateTime, default=datetime.now())
-    return_timestamp = db.Column(db.DateTime, default=datetime.now())
-    returned = db.Column(db.Boolean, default=0)
-
-    def __init__(self, user, alcohol):
-        self.user = user
-        self.alcohol = alcohol
-        self.buy_timestamp = datetime.now()
-        self.return_timestamp = datetime.now() + timedelta(days=30)
-        self.returned = 0
-
-    def __repr__(self):
-        return u'<%r - %r>' % (self.user.name, self.alcohol.title)
-
-
-class Comment(db.Model):
-    __tablename__ = 'comments'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    alcohol_id = db.Column(db.Integer, db.ForeignKey('alcohols.id'))
-    comment = db.Column(db.String(1024))
-    create_timestamp = db.Column(db.DateTime, default=datetime.now())
-    edit_timestamp = db.Column(db.DateTime, default=datetime.now())
-    deleted = db.Column(db.Boolean, default=0)
-
-    def __init__(self, alcohol, user, comment):
-        self.user = user
-        self.alcohol = alcohol
-        self.comment = comment
-        self.create_timestamp = datetime.now()
-        self.edit_timestamp = self.create_timestamp
-        self.deleted = 0
-
-
-alcohol_tag = db.Table('alcohols_tags',
-                    db.Column('alcohol_id', db.Integer, db.ForeignKey('alcohols.id')),
-                    db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'))
-                    )
-
-
-class Tag(db.Model):
-    __tablename__ = 'tags'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    alcohols = db.relationship('Alcohol',
-                            secondary=alcohol_tag,
-                            backref=db.backref('tags', lazy='dynamic'),
-                            lazy='dynamic')
-
-    def __repr__(self):
-        return u'<Tag %s>' % self.name

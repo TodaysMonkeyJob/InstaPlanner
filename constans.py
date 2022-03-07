@@ -42,3 +42,10 @@ FIRST_POST_IN_PROFILE = '//*[@id="react-root"]/section/main/div/div[2]/article/d
 DELETE_POST_SUBMENU_BUTTON = '/html/body/div[6]/div[3]/div/article/div/div[2]/div/div/div[1]/div/div/button'
 DELETE_POST_BUTTON_IN_SUBMENU = '/html/body/div[7]/div/div/div/div/button[1]'
 FINAL_DELETE_POST = '/html/body/div[7]/div/div/div/div[2]/button[1]'
+
+#PROFILE INFO
+PROFILE_IMAGE = '//*[@id="react-root"]/section/main/div/header/div/div/div/button/img'
+PROFILE_USERNAME = '//*[@id="react-root"]/section/main/div/header/section/div[1]/h1'
+PROFILE_POSTS = '//*[@id="react-root"]/section/main/div/header/section/ul/li[1]/div/span'
+PROFILE_FOLLOWERS = '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a/div/span'
+PROFILE_FOLLOWING = '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/div/span'

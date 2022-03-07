@@ -15,9 +15,9 @@ pagedown = PageDown(app)
 avatars = UploadSet('avatars', IMAGES)
 configure_uploads(app, avatars)
 
-from app.main import main, auth, alcohol
+from app.main import main, auth, profile
 
-for blueprint in [main, auth, alcohol]:
+for blueprint in [main, auth, profile]:
     app.register_blueprint(blueprint)
 
 from app import models
