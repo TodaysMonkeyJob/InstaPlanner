@@ -12,5 +12,4 @@ def inject_permissions():
 @main.route('/')
 def index():
     search_form = SearchForm()
-    page = request.args.get('page', 1, type=int)
     return render_template("index.html", search_form=search_form)

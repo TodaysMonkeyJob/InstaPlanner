@@ -17,6 +17,13 @@ IPlanner
 <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static',filename='css/bootstrap-theme.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static',filename='css/main.css') }}" rel="stylesheet">
+<script>
+    function redirect_parent() {
+        window.opener.location = "{{ url_for('profile.index') }}";
+        window.close();
+    }
+</script>
+
 <style>
 html, body {
     height: 88%;
@@ -111,11 +118,11 @@ h2.central-text{
         {{ wtf.form_field(form.email) }}
         {{ wtf.form_field(form.password) }}
 
-        <button class="add-profile" id="submit" name="submit" type="submit" value="Register">
+        <button class="add-profile" id="submit" name="submit" type="submit" value="Register" >
             <a class="add-profile">Submit</a>
         </button>
-
     </form>
+
 </main>
 
 <footer class="panel panel-inverse">

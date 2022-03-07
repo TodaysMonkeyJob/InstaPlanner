@@ -140,18 +140,17 @@ class Profile(db.Model):
     __tablename__ = 'profile'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), unique=True)
+    password = db.deferred(db.Column(db.String(128)))
     name = db.Column(db.String(64))
-    password_hash = db.deferred(db.Column(db.String(128)))
-    summary = db.deferred(db.Column(db.Text, default=""))
-    catalog = db.deferred(db.Column(db.Text, default=""))
-
-    @property
-    def password(self):
-        raise AttributeError('password is not readable attribute')
-
-    @password.setter
-    def password(self, password):
-        self.password_hash = generate_password_hash(password)
+    # password_hash = db.deferred(db.Column(db.String(128)))
+    #
+    # @property
+    # def password(self):
+    #     raise AttributeError('password is not readable attribute')
+    # #
+    # @password.setter
+    # def password(self, password):
+    #     self.password_hash = generate_password_hash(password)
 
 
 
