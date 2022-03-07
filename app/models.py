@@ -139,42 +139,20 @@ class Role(db.Model):
 class Profile(db.Model):
     __tablename__ = 'profile'
     id = db.Column(db.Integer, primary_key=True)
-    isbn = db.Column(db.String(16), unique=True)
-    title = db.Column(db.String(128))
-    origin_title = db.Column(db.String(128))
-    manufacturer = db.Column(db.String(128))
-    distributor = db.Column(db.String(64))
-    image = db.Column(db.String(512))
-    price = db.Column(db.String(16))
-    numbers = db.Column(db.Integer, default=10)
+    email = db.Column(db.String(64), unique=True)
+    name = db.Column(db.String(64))
+    password_hash = db.deferred(db.Column(db.String(128)))
     summary = db.deferred(db.Column(db.Text, default=""))
-    summary_html = db.deferred(db.Column(db.Text))
     catalog = db.deferred(db.Column(db.Text, default=""))
-    catalog_html = db.deferred(db.Column(db.Text))
-    hidden = db.Column(db.Boolean, default=0)
+
+    @property
+    def password(self):
+        raise AttributeError('password is not readable attribute')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
 
 
 
-    @staticmethod
-    def on_changed_summary(target, value, oldvalue, initiaor):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquate', 'code', 'em', 'i',
-                        'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
-        target.summary_html = bleach.linkify(
-            bleach.clean(markdown(value, output_format='html'),
-                         tags=allowed_tags, strip=True))
-
-    @staticmethod
-    def on_changed_catalog(target, value, oldvalue, initiaor):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquate', 'code', 'em', 'i',
-                        'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
-        target.catalog_html = bleach.linkify(
-            bleach.clean(markdown(value, output_format='html'),
-                         tags=allowed_tags, strip=True))
-
-    def __repr__(self):
-        return u'<Profile %r>' % self.title
-
-
-db.event.listen(Profile.summary, 'set', Profile.on_changed_summary)
-db.event.listen(Profile.catalog, 'set', Profile.on_changed_catalog)
 

@@ -1,4 +1,6 @@
 {%- extends "bootstrap/base.html" -%}
+{% import "bootstrap/wtf.html" as wtf %}
+
 {%- from 'bootstrap/utils.html' import flashed_messages,icon -%}
 {%- block metas -%}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -72,7 +74,8 @@ a.add-profile{
 h2.central-text{
     position: absolute;
     height: 84px;
-    top: 90px;
+    left: 70px;
+    top: 70px;
     font-family: Abhaya Libre;
     font-style: normal;
     font-weight: bold;
@@ -81,22 +84,6 @@ h2.central-text{
     text-align: center;
 
     color: #000000;
-}
-
-input.base-cred{
-    top: 135px;
-    height: 50px;
-    left:calc(50% - 170px);
-
-    padding-left: 45px;
-    font-family: Abhaya Libre;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 22px;
-    background: #EEEEEE;
-    border-radius: 10px;
-
-    position: relative;
 }
 
 </style>
@@ -115,21 +102,20 @@ input.base-cred{
 
 {%- block content -%}
 <main class="container-fluid Site-content">
-    <h2 class="central-text">Enter to Instagram account </h2>
+    <h2 class="central-text">Sign In to Instagram</h2>
 
-    <div class="input-groups  input-group-lg">
+    <form method="post" class="form" role="form">
+        <br><br><br><br><br>
 
-        <input class="base-cred" type="text" id="email" name="email" placeholder="Email..."><br><br>
-    </div>
-    <div class="input-groups  input-group-lg">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.email) }}
+        {{ wtf.form_field(form.password) }}
 
-        <input class="base-cred" type="text" id="password" name="password" placeholder="Password..."><br><br>
-    </div>
+        <button class="add-profile" id="submit" name="submit" type="submit" value="Register">
+            <a class="add-profile">Submit</a>
+        </button>
 
-    <button class="add-profile" type="submit" value="Submit">
-        <a class="add-profile">Submit</a></li>
-    </button>
-
+    </form>
 </main>
 
 <footer class="panel panel-inverse">
