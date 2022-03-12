@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask import render_template, url_for, flash, redirect, request, abort, g
 from flask_login import login_required, current_user
-from app.models import User, Log, Permission
+from app.models import User, Permission
 from .forms import EditProfileForm, AvatarEditForm, AvatarUploadForm
 from app import db, avatars
 from . import user
@@ -21,13 +21,8 @@ def index():
 def detail(user_id):
     the_user = User.query.get_or_404(user_id)
 
-    show = request.args.get('show', 0, type=int)
-    if show != 0:
-        show = 1
-
     page = request.args.get('page', 1, type=int)
-    pagination = the_user.logs.filter_by(returned=show) \
-        .order_by(Log.buy_timestamp.desc()).paginate(page, per_page=5)
+    pagination = the_user.paginate(page, per_page=5)
     logs = pagination.items
 
     return render_template("user_detail.html", user=the_user, logs=logs, pagination=pagination,

@@ -37,7 +37,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     {%- if current_user.is_authenticated -%}
                         <li class="nav-1" {%- if request.path == url_for('profile.index') %} class="active"{%- endif -%} >
-                            <a class="nav-1" href="{{ url_for('profile.index') }}">Add post</a></li>
+                            <a class="nav-1" href="{{ url_for('profile.add_profile') }}">Add profile</a></li>
 
                         <li class="nav-2"> <a class="nav-2" href="{{ url_for('auth.logout') }}">Sign out</a></li>
                     {%- else -%}

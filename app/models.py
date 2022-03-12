@@ -17,6 +17,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(64))
     password_hash = db.deferred(db.Column(db.String(128)))
     major = db.Column(db.String(128))
+    profile = db.Column(db.Integer, db.ForeignKey('profile.name'))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     headline = db.Column(db.String(32), nullable=True)
     about_me = db.deferred(db.Column(db.Text, nullable=True))
@@ -141,7 +142,12 @@ class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), unique=True)
     password = db.deferred(db.Column(db.String(128)))
-    name = db.Column(db.String(64))
+    name = db.Column(db.String(64), unique=True)
+    post = db.Column(db.String(64))
+    follower = db.Column(db.String(64))
+    following = db.Column(db.String(64))
+    avatars = db.Column(db.String(256))
+
     # password_hash = db.deferred(db.Column(db.String(128)))
     #
     # @property

@@ -9,9 +9,8 @@ class SearchForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email',
-                        validators=[DataRequired(message=u"You forgot to fill in this item!"), Length(1, 64),
-                                    Email(message=u"Is this your Email?")])
+    name = StringField('Name',
+                        validators=[DataRequired(message=u"You forgot to fill in this item!"), Length(1, 64)])
     password = PasswordField(u'Password',
                              validators=[DataRequired(message=u"You forgot to fill in this item!"),
                                          Length(6, 32)])

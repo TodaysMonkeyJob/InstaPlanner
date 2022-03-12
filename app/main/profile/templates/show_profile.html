@@ -1,0 +1,19 @@
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th class="hidden-xs">Name</th>
+            <th class="hidden-xs">Password</th>
+        </tr>
+        </thead>
+        <tbody>
+            <td>
+                <img src="../{{ profile.avatars }}">
+                <p>{{ profile.post }}
+                {{ profile.follower }}
+                {{ profile.following }}</p>
+            </td>
+            <td>
+                <p>{{ profile.password }} </p>
+            </td>
+        </tbody>
+    </table>
