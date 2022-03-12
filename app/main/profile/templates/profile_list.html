@@ -44,8 +44,18 @@ td.image-setter{
 
 }
 
-td.text-setter{
-border-radius: 0px 40px 40px 0px;
+td.name-setter{
+border-radius: 0px 40px 0px 0px;
+background-color:#FFFFFF
+}
+
+td.statistic-setter{
+background-color:#FFFFFF
+}
+
+td.info-setter{
+border-radius: 0px 0px 40px 0px;
+background-color:#FFFFFF
 }
 
 img.profile-border{
@@ -68,8 +78,6 @@ border-radius: 40px 0px 0px 40px;
   width:65%;
   margin: auto;
   border-collapse: separate;
-  border-spacing: 0 15px;
-
 }
 
 div.bottom{
@@ -77,6 +85,13 @@ div.bottom{
     left:calc(50% - 85px);
     bottom: -50px;
 }
+
+td.empty-space{
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 
 
 </style>
@@ -111,32 +126,44 @@ div.bottom{
 
 {% if profiles|length >= 1 %}
 <div id="table-scroll" class="table-scroll">
-    <table class="table-striped">
+    <table class="table-designed">
         <tbody>
         {%- for profile in profiles -%}
         <tr class="animated fadeIn delay-{{ loop.index }}">
-            <td class="image-setter">
+            <td class="image-setter" rowspan="4">
                 <img class="profile-border" src="../{{ profile.avatars }}" width="100%">
             </td>
-            <td class="text-setter">
-                <p>{{ profile.name }}</p>
-                <p>{{ profile.post }}
-                {{ profile.follower }}
-                {{ profile.following }}</p>
+        </tr>
+        <tr>
+            <td class="name-setter">
+                {{ profile.name }}
             </td>
-            <div></div>
-        </tr><tr></tr>
-
+        </tr>
+        <tr>
+            <td class="statistic-setter">
+                kejgioaweigweigjaweigjawilegjklasdgklasdjgklsdgklhsdklghasdklghklsdghasdlhglajdhglaeigjawilegjklasdgklasdjgklsdgklhsdklghasdklghklsdghasdlhgla
+            </td>
+        </tr>
+        <tr >
+            <td class="info-setter">
+                {{ profile.post }}
+                {{ profile.follower }}
+                {{ profile.following }}
+                <button>kweihwei</button>
+            </td>
+        </tr>
+        <td class="empty-space">.</td>
         {%- endfor -%}
         </tbody>
+
     </table>
 </div>
 
 <div class="bottom">
-{% if pagination and pagination.pages > 1 %}
-<div class="container-fluid text-center">
-    {{ render_pagination(pagination) }}
-</div>
+    {% if pagination and pagination.pages > 1 %}
+    <div class="container-fluid text-center">
+        {{ render_pagination(pagination) }}
+    </div>
 </div>
 {%- endif -%}
 
