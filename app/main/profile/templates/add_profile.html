@@ -111,14 +111,14 @@ h2.central-text{
 <main class="container-fluid Site-content">
     <h2 class="central-text">Sign In to Instagram</h2>
 
-    <form method="post" class="form" role="form">
+    <form method="post" class="form" role="form"  id="certform">
         <br><br><br><br><br>
 
         {{ form.hidden_tag() }}
         {{ wtf.form_field(form.name) }}
         {{ wtf.form_field(form.password) }}
 
-        <button class="add-profile" id="submit" name="submit" type="submit" value="Register" >
+        <button class="add-profile" id="submit" name="submit" type="submit" value="Register">
             <a class="add-profile">Submit</a>
         </button>
     </form>
@@ -143,4 +143,11 @@ h2.central-text{
 <script src="{{ url_for('static',filename='js/jquery-2.2.3.min.js') }}"></script>
 <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script>
+   $(document).ready(function () {
+      $('#certform').ajaxForm(function() {window.close();});
+   });
+</script>
 {%- endblock scripts -%}

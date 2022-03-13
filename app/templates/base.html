@@ -36,8 +36,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     {%- if current_user.is_authenticated -%}
-                        <li class="nav-1" {%- if request.path == url_for('profile.index') %} class="active"{%- endif -%} >
-                            <a class="nav-1" href="{{ url_for('profile.add_profile') }}">Add profile</a></li>
+                        <li class="nav-1" onclick='f=window.open(href="{{ url_for("profile.add_profile") }}","fenetre","the style (without style tag, example - width=450, height=550, no px")'
+                                    style="cursor: pointer;">
+                            <a class="nav-1">Add profile</a></li>
 
                         <li class="nav-2"> <a class="nav-2" href="{{ url_for('auth.logout') }}">Sign out</a></li>
                     {%- else -%}

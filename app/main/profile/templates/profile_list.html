@@ -40,16 +40,51 @@ table.table-for-profile{
 
 td.image-setter{
     width: 25%;
-    border-radius: 40px 0px 0px 40px;
-
+    border-radius: 40px 0px 0px 40px
 }
 
-td.name-setter{
+th.name-setter{
 border-radius: 0px 40px 0px 0px;
 background-color:#FFFFFF
 }
 
-td.statistic-setter{
+p.name-setter{
+font-family: 'Abhaya Libre';
+font-style: normal;
+font-weight: 700;
+font-size: 28px;
+word-spacing: 4cm;
+padding-left: 40px;
+}
+
+h3.post-setter{
+font-family: 'Abhaya Libre';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+padding-left: 40px;
+}
+
+h3.statistic-setter{
+font-family: 'Abhaya Libre';
+font-style: normal;
+font-weight: 300;
+font-size: 20px;
+padding-left: 40px;
+}
+
+h3.info-setter{
+font-family: 'Abhaya Libre';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+}
+
+th.statistic-setter{
+background-color:#FFFFFF
+}
+
+td.back-setter{
 background-color:#FFFFFF
 }
 
@@ -59,7 +94,8 @@ background-color:#FFFFFF
 }
 
 img.profile-border{
-border-radius: 40px 0px 0px 40px;
+    width: 100%;
+    border-radius: 40px 0px 0px 40px;
 }
 
 .table-scroll {
@@ -92,7 +128,41 @@ td.empty-space{
     overflow: hidden;
 }
 
+button.enter{
+    background: #839B97;
+    border-radius: 20px;
+}
 
+
+button.nav-3{
+    display: flex;
+    height: 35px;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #839B97;
+    border-radius: 10px;
+    right: 20px;
+}
+
+a.nav-3{
+    position: static;
+    font-family: Abhaya Libre;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    height: 35px;
+    width: 90px;
+
+    color: #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+a.nav-3:hover {
+    background: #FFFFFF;
+    color: #839B97;
+}
 
 </style>
 {%- if current_user.is_authenticated -%}
@@ -131,26 +201,37 @@ td.empty-space{
         {%- for profile in profiles -%}
         <tr class="animated fadeIn delay-{{ loop.index }}">
             <td class="image-setter" rowspan="4">
-                <img class="profile-border" src="../{{ profile.avatars }}" width="100%">
+                {%- if profile.avatars -%}
+                    <img class="profile-border" src="../{{ profile.avatars }}" >
+                {%- else -%}
+                    <img class="profile-border" src="../static/img/empty.jpg" >
+                {%- endif -%}
+
             </td>
         </tr>
         <tr>
-            <td class="name-setter">
-                {{ profile.name }}
-            </td>
+            <th class="name-setter" colspan="4">
+                <p class="name-setter">
+                    {{ profile.name }}
+                </p>
+            </th>
+
         </tr>
         <tr>
-            <td class="statistic-setter">
-                kejgioaweigweigjaweigjawilegjklasdgklasdjgklsdgklhsdklghasdklghklsdghasdlhglajdhglaeigjawilegjklasdgklasdjgklsdgklhsdklghasdklghklsdghasdlhgla
-            </td>
+            <th class="statistic-setter"  colspan="4">
+                <h3 class="statistic-setter">
+                    kejgioaweigweigjaweigjawilegjklasdgklasdjg<br>
+                    klsdgklhsdklghasdklghklsdghasdlhglajdhglaei<br>
+                    gjawilegjklasdgklasdjgklsdgklhsdklghasdklghklsdghasdlhgla
+                </h3>
+            </th>
+
         </tr>
         <tr >
-            <td class="info-setter">
-                {{ profile.post }}
-                {{ profile.follower }}
-                {{ profile.following }}
-                <button>kweihwei</button>
-            </td>
+            <td class="back-setter"><h3 class="post-setter">Posts: {{ profile.post }}</h3></td>
+             <td class="back-setter"><h3 class="info-setter">Followers: {{ profile.follower }}</h3></td>
+             <td class="back-setter"><h3 class="info-setter">Following: {{ profile.following }}</h3></td>
+            <td class="info-setter"><h3 class="info-setter"><button class="nav-3"><a class="nav-3">Enter</a></button></h3></td>
         </tr>
         <td class="empty-space">.</td>
         {%- endfor -%}
@@ -168,6 +249,5 @@ td.empty-space{
 {%- endif -%}
 
 {%- endif -%}
-
 {% endif %}
 {%- endblock -%}

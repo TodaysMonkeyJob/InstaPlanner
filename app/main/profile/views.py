@@ -30,7 +30,7 @@ def add_profile():
         db.session.add(the_profile)
         db.session.commit()
         flash(u'Registered successfully!')
-        return redirect(request.args.get('next') or url_for('profile.index'))
+        return "<script>window.onload = window.close();</script>"
     return render_template("add_profile.html", form=form, title=u"Add new instagram profile")
 
 

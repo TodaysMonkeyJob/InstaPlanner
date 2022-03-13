@@ -28,7 +28,7 @@ li.nav-1{
     align-items: flex-start;
 
     position: absolute;
-    width: 90px;
+    width: 105px;
     height: 32px;
     right: calc(90px/2 + 120px);
     top: 18px;
@@ -41,7 +41,7 @@ li.nav-1{
 
 a.nav-1{
     position: static;
-    width: 88px;
+    width: 103px;
 
     font-family: Abhaya Libre;
     font-style: normal;
@@ -192,7 +192,7 @@ h1.profile{
     position: absolute;
     width: 316px;
     height: 42px;
-    left: 140px;
+    left: 240px;
     top: 70px;
 
     font-family: Abhaya Libre;
@@ -208,7 +208,7 @@ h3.profile-filter{
     position: absolute;
     width: 70px;
     height: 21px;
-    left: 140px;
+    left: 240px;
     top: 130px;
 
     font-family: Abhaya Libre;
@@ -224,7 +224,7 @@ h3.profile-view{
     position: absolute;
     width: 70px;
     height: 21px;
-    right: 250px;
+    right: 350px;
     top: 130px;
 
     font-family: Abhaya Libre Medium;
@@ -240,7 +240,7 @@ button.image-grid{
     position: absolute;
     width: 30px;
     height: 30px;
-    right: 230px;
+    right: 330px;
     top: 145px;
     border-radius: 20px;
 
@@ -251,7 +251,7 @@ button.image-list{
     position: absolute;
     width: 30px;
     height: 30px;
-    right: 190px;
+    right: 290px;
     top: 143px;
 
     border: none;
