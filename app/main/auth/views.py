@@ -15,7 +15,7 @@ def login():
         if the_user is not None and the_user.verify_password(login_form.password.data):
             login_user(the_user, login_form.remember_me.data)
             flash(u'Login successful!  Welcome %s!' % the_user.name, 'success')
-            return redirect(request.args.get('next') or url_for('main.index'))
+            return redirect(request.args.get('next') or url_for('profile.index'))
         flash(u'Invalid username or wrong password!', 'danger')
     return render_template("login.html", form=login_form, title=u"Sign in")
 
@@ -39,7 +39,7 @@ def register():
         db.session.commit()
         flash(u'Registered successfully! Welcome %s!' % form.name.data, 'success')
         login_user(the_user)
-        return redirect(request.args.get('next') or url_for('main.index'))
+        return redirect(request.args.get('next') or url_for('profile.index'))
     return render_template('register.html', form=form, title=u"New User Registration")
 
 
