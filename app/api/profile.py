@@ -29,3 +29,14 @@ class ProfileList(Resource):
             'current_page': pagination.page,
             'per_page': per_page,
         })
+
+
+@api.route('/profile/<str:name>/')
+class Alcohol(Resource):
+    @marshal_with(profile_list)
+    def get(self, alcohol_id):
+        alcohol = model_Profile.query.get_or_404(alcohol_id)
+        if alcohol.hidden:
+            abort(404)
+            abort(404)
+        return jsonify(alcohol)

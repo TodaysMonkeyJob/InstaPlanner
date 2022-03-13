@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 
 from constans import SMALL_PAUSE, MEDIUM_PAUSE, USER_PROFILE_SUBMENU, USER_PROFILE_IN_SUBMENU, \
     FIRST_POST_IN_PROFILE, DELETE_POST_SUBMENU_BUTTON, DELETE_POST_BUTTON_IN_SUBMENU, FINAL_DELETE_POST, PROFILE_IMAGE, \
-    PROFILE_USERNAME, PROFILE_POSTS, PROFILE_FOLLOWERS, PROFILE_FOLLOWING
+    PROFILE_POSTS, PROFILE_FOLLOWERS, PROFILE_FOLLOWING, PROFILE_USERNAME_H1, PROFILE_USERNAME_H2
 
 
 class GetUserInfo:
@@ -30,7 +30,10 @@ class GetUserInfo:
 
     def get_user_info(self):
         self.browser.implicitly_wait(self.small_pause)
-        self.profile_username = self.browser.find_element(By.XPATH, PROFILE_USERNAME).text
+        try:
+            self.profile_username = self.browser.find_element(By.XPATH, PROFILE_USERNAME_H1).text
+        except Exception:
+            self.profile_username = self.browser.find_element(By.XPATH, PROFILE_USERNAME_H2).text
         self.posts = self.browser.find_element(By.XPATH, PROFILE_POSTS).text
         self.followers = self.browser.find_element(By.XPATH, PROFILE_FOLLOWERS).text
         self.following = self.browser.find_element(By.XPATH, PROFILE_FOLLOWING).text
@@ -42,7 +45,7 @@ class GetUserInfo:
         logo = self.browser.find_element(By.XPATH, PROFILE_IMAGE)
         src = logo.get_attribute('src')
         urllib.request.urlretrieve(src, f"/home/oleh/PyProjects/instaPlanner/app/static/img/{self.profile_username}.jpg")
-        sleep(30)
+        sleep(10)
 
     def save_user_info(self):
         user_info = {'username': self.profile_username, 'posts': self.posts,

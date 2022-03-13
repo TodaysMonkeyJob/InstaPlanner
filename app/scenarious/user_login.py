@@ -13,12 +13,12 @@ class LoginPage:
 
     def input_username(self):
         self.browser.implicitly_wait(self.small_pause)
-        username_input = self.browser.find_element(By.XPATH, self.username)
+        username_input = self.browser.find_element(By.XPATH, USERNAME_XPATH)
         username_input.send_keys(self.username)
 
     def input_password(self):
         self.browser.implicitly_wait(self.small_pause)
-        password_input = self.browser.find_element(By.XPATH, self.password)
+        password_input = self.browser.find_element(By.XPATH, PASSWORD_XPATH)
         password_input.send_keys(self.password)
 
     def log_in(self):

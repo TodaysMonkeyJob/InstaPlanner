@@ -45,7 +45,8 @@ FINAL_DELETE_POST = '/html/body/div[7]/div/div/div/div[2]/button[1]'
 
 #PROFILE INFO
 PROFILE_IMAGE = '//*[@id="react-root"]/section/main/div/header/div/div/div/button/img'
-PROFILE_USERNAME = '//*[@id="react-root"]/section/main/div/header/section/div[1]/h1'
+PROFILE_USERNAME_H1 = '//*[@id="react-root"]/section/main/div/header/section/div[1]/h1'
+PROFILE_USERNAME_H2 = '//*[@id="react-root"]/section/main/div/header/section/div[1]/h2'
 PROFILE_POSTS = '//*[@id="react-root"]/section/main/div/header/section/ul/li[1]/div/span'
 PROFILE_FOLLOWERS = '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a/div/span'
 PROFILE_FOLLOWING = '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/div/span'

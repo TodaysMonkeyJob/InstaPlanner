@@ -228,7 +228,7 @@ a.nav-3:hover {
             <td class="back-setter"><h3 class="post-setter">Posts: {{ profile.post }}</h3></td>
              <td class="back-setter"><h3 class="info-setter">Followers: {{ profile.follower }}</h3></td>
              <td class="back-setter"><h3 class="info-setter">Following: {{ profile.following }}</h3></td>
-            <td class="info-setter"><h3 class="info-setter"><button class="nav-3"><a class="nav-3">Enter</a></button></h3></td>
+            <td class="info-setter"><h3 class="info-setter"><button class="nav-3"><a class="nav-3" href='{{ url_for("profile.show_profile",name=profile.name)  }}'>Enter</a></button></h3></td>
         </tr>
         <td class="empty-space">.</td>
         {%- endfor -%}
