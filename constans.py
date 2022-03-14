@@ -20,7 +20,8 @@ LOGIN_BUTTON = '//*[@id="loginForm"]/div/div[3]/button/div'
 
 # STORY CHECKER
 HOME_BUTTON = '//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[1]/div/a'
-NOTIFICATIONS_OFF_BUTTON = '/html/body/div[6]/div/div/div/div[3]/button[2]'
+NOTIFICATIONS_OFF_BUTTON_1 = '/html/body/div[6]/div/div/div/div[3]/button[2]'
+NOTIFICATIONS_OFF_BUTTON_2 = '/html/body/div[5]/div/div/div/div[3]/button[2]'
 STORY_RIGHT_BUTTON = '//*[@id="react-root"]/section/div[1]/div/div[5]/section/div/button[2]'
 STORY_LEFT_BUTTON = '//*[@id="react-root"]/section/div[1]/div/div[5]/section/div/button[1]/div'
 FIRST_STORY = '//*[@id="react-root"]/section/main/section/div[1]/div[1]/div[2]/div/div/div/ul/li[3]/div/button/div[1]/span/img'
