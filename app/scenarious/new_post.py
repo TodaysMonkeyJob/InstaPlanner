@@ -9,15 +9,15 @@ from delete_post import DeletePost
 
 class NewPost:
 
-    def __init__(self, browser):
-        self.browser = browser
+    def __init__(self, driver):
+        self.driver = driver
         self.new_photo = TEST_PHOTO
         self.small_pause = SMALL_PAUSE
         self.medium_pause = MEDIUM_PAUSE
 
     def switch_to_new_post_tab(self):
-        self.browser.implicitly_wait(self.small_pause)
-        new_post_button = self.browser.find_element(By.XPATH, NEW_POST)
+        self.driver.implicitly_wait(self.small_pause)
+        new_post_button = self.driver.find_element(By.XPATH, NEW_POST)
         new_post_button.click()
 
     def add_new_photo(self):
@@ -30,37 +30,37 @@ class NewPost:
 
     def set_photo(self):
         try:
-            self.browser.implicitly_wait(self.medium_pause)
-            add_photo_button = self.browser.find_element(By.XPATH, SELECT_PHOTO)
+            self.driver.implicitly_wait(self.medium_pause)
+            add_photo_button = self.driver.find_element(By.XPATH, SELECT_PHOTO)
             add_photo_button.send_keys(self.new_photo)
         except Exception as exception:
             print(exception)
-        next_photo_button = self.browser.find_element(By.XPATH, NEW_POST_NEXT)
+        next_photo_button = self.driver.find_element(By.XPATH, NEW_POST_NEXT)
         next_photo_button.click()
-        next_photo_button = self.browser.find_element(By.XPATH, NEW_POST_NEXT)
+        next_photo_button = self.driver.find_element(By.XPATH, NEW_POST_NEXT)
         next_photo_button.click()
 
     def add_tag_to_photo(self):
-        self.browser.implicitly_wait(self.small_pause)
-        add_tag = self.browser.find_element(By.XPATH, ADD_PHOTO_TAG_FIELD)
+        self.driver.implicitly_wait(self.small_pause)
+        add_tag = self.driver.find_element(By.XPATH, ADD_PHOTO_TAG_FIELD)
         add_tag.click()
-        self.browser.implicitly_wait(self.small_pause)
-        add_tag = self.browser.find_element(By.XPATH, ADD_PHOTO_TAG_INPUT)
+        self.driver.implicitly_wait(self.small_pause)
+        add_tag = self.driver.find_element(By.XPATH, ADD_PHOTO_TAG_INPUT)
         add_tag.send_keys("blck_n_brwn")
-        self.browser.implicitly_wait(self.small_pause)
-        add_tag = self.browser.find_element(By.XPATH, ADD_PHOTO_TAG_SELECT)
+        self.driver.implicitly_wait(self.small_pause)
+        add_tag = self.driver.find_element(By.XPATH, ADD_PHOTO_TAG_SELECT)
         add_tag.click()
 
 
 
     def share_photo(self):
-        share_photo_button = self.browser.find_element(By.XPATH, NEW_POST_SHARE)
+        share_photo_button = self.driver.find_element(By.XPATH, NEW_POST_SHARE)
         share_photo_button.click()
 
     def close_post_sharing(self):
         try:
-            close_button = self.browser.find_element(By.XPATH, CLOSE_POST_SHARING)
+            close_button = self.driver.find_element(By.XPATH, CLOSE_POST_SHARING)
             close_button.click()
         except Exception:
             pass
-        return DeletePost(self.browser)
+        return DeletePost(self.driver)

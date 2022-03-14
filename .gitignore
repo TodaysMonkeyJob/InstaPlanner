@@ -2,9 +2,7 @@ venv
 .idea
 __pycache__/
 /test_photos
-/cookies
 app.db
-/cookies
+/app/profiles/
 /json_format
-/app/json_data
 /app/static/img

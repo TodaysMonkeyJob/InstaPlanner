@@ -7,7 +7,7 @@ from app.models import Profile
 from . import profile
 from .forms import LoginForm
 from .forms import SearchForm
-from app.get_profile_data import main
+from app.scenarious.scenario_selector import launch_scenario
 
 @profile.route('/', methods=['GET', 'POST'])
 def index():
@@ -17,7 +17,7 @@ def index():
     pagination = the_profiles.paginate(page, per_page=8)
     result_profiles = pagination.items
     for profile in result_profiles:
-        with open(f'app/json_data/{profile.name}.json', 'r') as file:
+        with open(f'app/profiles/{profile.name}/json_data/user_info.json', 'r') as file:
             profile_data = json.load(file)
             profile.post = profile_data["posts"]
             profile.follower = profile_data["followers"]
@@ -35,7 +35,7 @@ def add_profile():
     if form.validate_on_submit():
         the_profile = Profile(name=form.name.data, password=form.password.data)
         try:
-            main(the_profile.name, the_profile.password)
+            launch_scenario(the_profile.name, the_profile.password, "get_user_data")
             db.session.add(the_profile)
             db.session.commit()
             flash(u'Registered successfully!')
@@ -45,7 +45,7 @@ def add_profile():
     return render_template("add_profile.html", form=form, title=u"Add new instagram profile")
 
 
-@profile.route('/<name>/')
+@profile.route('/<name>/', methods=['GET'])
 def show_profile(name):
     profile = Profile.query.filter_by(name=name).first_or_404()
     return render_template('show_profile.html', profile=profile)
