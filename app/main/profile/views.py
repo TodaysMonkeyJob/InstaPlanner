@@ -48,6 +48,7 @@ def add_profile():
 @profile.route('/<name>/', methods=['GET'])
 def show_profile(name):
     profile = Profile.query.filter_by(name=name).first_or_404()
+    # launch_scenario(profile.name, profile.password, "save_user_photos")
     return render_template('show_profile.html', profile=profile)
 
 
