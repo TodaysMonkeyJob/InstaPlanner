@@ -9,7 +9,9 @@ from random_user_agent.user_agent import UserAgent
 from selenium.webdriver.chrome.options import Options
 
 from app.scenarious.get_profile_info import GetUserInfo
+from app.scenarious.save_photos import InstaSavePhoto
 from constans import *
+
 
 class IntaLogin:
 
@@ -30,7 +32,7 @@ class IntaLogin:
                                        limit=100)
         user_agent = user_agent_rotator.get_random_user_agent()
         chrome_options = Options()
-        # chrome_option.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument(f"user-agent={user_agent}")
@@ -55,6 +57,9 @@ class IntaLogin:
         if self.task == "get_user_data":
             scenario = GetUserInfo(self.driver)
             scenario.user_profile()
+        if self.task == "save_user_photos":
+            scenario = InstaSavePhoto(self.driver, self.username)
+            scenario.download_content()
 
     def save_cookies(self):
         json.dump(self.driver.get_cookies(), open(self.cookies_file_path, "w"))
@@ -107,4 +112,3 @@ class IntaLogin:
             self.turn_off_notification()
             self.save_cookies()
             self.switch()
-
