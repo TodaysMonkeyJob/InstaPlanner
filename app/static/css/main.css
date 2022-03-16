@@ -156,6 +156,7 @@ a.navbar-brand{
 }
 
 .panel.panel-inverse {
+position: static;
     -webkit-box-flex: none;
     -moz-box-flex: none;
     -webkit-flex: none;

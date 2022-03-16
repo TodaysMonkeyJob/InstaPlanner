@@ -3,7 +3,7 @@ venv
 __pycache__/
 /test_photos
 app.db
-/app/profiles/
+/app/info_data/
 /json_format
 /app/static/img
-/blck_n_brwn
+/app/static/blck_n_brwn

@@ -1,19 +1,191 @@
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th class="hidden-xs">Name</th>
-            <th class="hidden-xs">Password</th>
-        </tr>
-        </thead>
+{% extends "base.html" %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block mycontent %}
+
+<style>
+button.add-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 27px;
+
+    position: absolute;
+    width: 205px;
+    height: 60px;
+    left:calc(50% - 100px);
+    top: 365px;
+
+    background: #839B97;
+    border-radius: 10px;
+}
+
+a.add-profile{
+    position: static;
+    width: 150px;
+    height: 35px;
+    font-family: Abhaya Libre;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+table.table-for-profile{
+    width:65%;
+
+}
+
+td.image-setter{
+    width: 25%;
+    border-radius: 40px 0px 0px 40px
+}
+
+th.name-setter{
+border-radius: 0px 40px 0px 0px;
+}
+
+p.name-setter{
+font-family: 'Abhaya Libre';
+font-style: normal;
+font-weight: 700;
+font-size: 28px;
+word-spacing: 4cm;
+padding-left: 40px;
+}
+
+h3.post-setter{
+font-family: 'Abhaya Libre';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+padding-left: 40px;
+}
+
+h3.statistic-setter{
+font-family: 'Abhaya Libre';
+font-style: normal;
+font-weight: 300;
+font-size: 20px;
+padding-left: 40px;
+}
+
+h3.info-setter{
+font-family: 'Abhaya Libre';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+}
+
+
+img.profile-border{
+    width: 200px;
+    height: 200px;
+    border-radius: 50% 50% 50% 50% ;
+}
+
+.table-scroll {
+  top: 20px;
+  margin-left: 5%;
+  position: relative;
+  z-index: 1;
+  overflow: auto;
+  height: 25%;
+
+}
+
+.table-scroll table {
+  width:55%;
+  margin: auto;
+  border-collapse: separate;
+}
+
+div.bottom{
+    position: absolute;
+    left:calc(50% - 85px);
+    bottom: -50px;
+}
+
+td.empty-space{
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+button.enter{
+    background: #839B97;
+    border-radius: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-gap: 30px;
+  width:63%;
+  margin: auto;
+  align-items: stretch;
+  height: auto;
+
+
+}
+
+.grid img {
+  box-shadow: 2px 2px 3px 0px  rgba(0,0,0,0.3);
+  object-fit: cover;
+  width: 350px;
+  height: 350px;
+}
+
+</style>
+{%- if current_user.is_authenticated -%}
+
+<div id="table-scroll" class="table-scroll">
+    <table class="table-designed">
         <tbody>
-            <td>
-                <img src="/../{{ profile.avatars }}">
-                <p>{{ profile.avatars }}
-                {{ profile.follower }}
-                {{ profile.following }}</p>
+        <tr class="animated fadeIn delay">
+            <td class="image-setter" rowspan="4">
+                {%- if profile.avatars -%}
+                    <img class="profile-border" src="/../{{ profile.avatars }}" >
+                {%- else -%}
+                    <img class="profile-border" src="/../static/img/empty.jpg" >
+                {%- endif -%}
             </td>
-            <td>
-                <p>{{ profile.password }} </p>
-            </td>
+        </tr>
+        <tr>
+            <th class="name-setter" colspan="4">
+                <p class="name-setter">
+                    <br>{{ profile.name }}
+                </p>
+            </th>
+        </tr>
+
+        <tr>
+            <td class="back-setter"><h3 class="post-setter">Posts: {{ profile.post }}</h3></td>
+             <td class="back-setter"><h3 class="info-setter">Followers: {{ profile.follower }}</h3></td>
+             <td class="back-setter"><h3 class="info-setter">Following: {{ profile.following }}</h3></td>
+            <td class="empty-space">text to fill space</td>
+        </tr>
+        <tr>
+            <th class="statistic-setter"  colspan="4">
+                <h3 class="statistic-setter">
+                    <br><br><br>
+                </h3>
+            </th>
+        </tr>
         </tbody>
     </table>
+</div>
+<br>
+<hr align="center" width=62% size="200" color="#ff0000" />
+<div>
+<main class="grid">
+    {%- for posts in post -%}
+        <img src="/../static/{{ profile.name }}/{{ posts.post_id }}" >
+    {%- endfor -%}
+</main>
+</div>
+
+{%- endif -%}
+{%- endblock -%}

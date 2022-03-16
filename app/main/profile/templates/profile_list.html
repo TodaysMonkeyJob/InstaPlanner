@@ -99,7 +99,7 @@ img.profile-border{
 }
 
 .table-scroll {
-  top: 150px;
+  top: 200px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -202,9 +202,9 @@ a.nav-3:hover {
         <tr class="animated fadeIn delay-{{ loop.index }}">
             <td class="image-setter" rowspan="4">
                 {%- if profile.avatars -%}
-                    <img class="profile-border" src="../{{ profile.avatars }}" >
+                    <img class="profile-border" src="/../{{ profile.avatars }}" >
                 {%- else -%}
-                    <img class="profile-border" src="../static/img/empty.jpg" >
+                    <img class="profile-border" src="/../static/img/empty.jpg" >
                 {%- endif -%}
             </td>
         </tr>

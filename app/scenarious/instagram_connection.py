@@ -36,7 +36,7 @@ class IntaLogin:
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument(f"user-agent={user_agent}")
-        cookies_file_path = f'app/profiles/{self.username}/cookies/user_cookies.json'
+        cookies_file_path = f'app/cookies/{self.username}.json'
         cookie_websites = ['https://Instagram.com']
         self.cookies_file_path = cookies_file_path
         self.cookie_websites = cookie_websites
