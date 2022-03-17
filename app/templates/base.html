@@ -22,7 +22,7 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="{{ url_for('main.index') }}" >IPlanner</a>
+                <a class="navbar-brand" href='{{ url_for("profile.index") }}' >IPlanner</a>
             </div>
             {%- if current_user.is_authenticated -%}
             <form class="form form-horizontal" method="get">
@@ -51,28 +51,13 @@
 {%- endblock -%}
 
 {%- block content -%}
+ <div id="page-container">
+   <div id="content-wrap">
     <main class="container-fluid Site-content">
-        {%- with icon_transform={
-    'success':icon('ok'),
-    'danger':icon('ban-circle'),
-    'info': icon('info-sign'),
-    'warning': icon('alert')} -%}
-            {%- set messages=get_flashed_messages(with_categories=True) -%}
-            {%- if messages -%}
-                {%- for cat, msg in messages -%}
-                    <div class="alert alert-{{ cat }} alert-dismissible animated bounceIn delay-{{ loop.index0 }}"
-                         role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        {{ icon_transform.get(cat) ~' '~ msg }}
-                    </div>
-                {%- endfor -%}
-            {%- endif -%}
-        {%- endwith -%}
         {%- block mycontent -%}{%- endblock -%}
     </main>
-
-    <footer class="panel panel-inverse">
+   </div>
+    <footer id="footer" class="panel panel-inverse">
         <div id="site-footer-content">
             <div><a href="https://github.com/TodaysMonkeyJob/InstaPlanner" target="_blank"><span
                     class="icon icon--github"><svg
@@ -83,7 +68,7 @@
 
             <span class="line-wrap">Created by <a class="line-wraper" href="https://github.com/TodaysMonkeyJob">Oleh Osadchuk</a>.</span>
         </div>
-    </footer>
+    </footer></div>
 {%- endblock -%}
 
 {%- block scripts -%}

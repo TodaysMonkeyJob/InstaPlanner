@@ -15,7 +15,7 @@ button.add-profile{
     width: 205px;
     height: 60px;
     left:calc(50% - 100px);
-    top: 365px;
+    top: 315px;
 
     background: #839B97;
     border-radius: 10px;
@@ -202,9 +202,9 @@ a.nav-3:hover {
         <tr class="animated fadeIn delay-{{ loop.index }}">
             <td class="image-setter" rowspan="4">
                 {%- if profile.avatars -%}
-                    <img class="profile-border" src="../{{ profile.avatars }}" >
+                    <img class="profile-border" src="https://iplanner-photo-saver.s3.eu-central-1.amazonaws.com/profile/{{ profile.name }}/profile-photo/{{ profile.name }}.jpg" >
                 {%- else -%}
-                    <img class="profile-border" src="../static/img/empty.jpg" >
+                    <img class="profile-border" src="/../static/img/empty.jpg" >
                 {%- endif -%}
             </td>
         </tr>
@@ -243,7 +243,6 @@ a.nav-3:hover {
     </div>
 </div>
 {%- endif -%}
-
 {%- endif -%}
 {% endif %}
 {%- endblock -%}

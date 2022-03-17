@@ -156,6 +156,7 @@ a.navbar-brand{
 }
 
 .panel.panel-inverse {
+position: static;
     -webkit-box-flex: none;
     -moz-box-flex: none;
     -webkit-flex: none;
@@ -193,7 +194,7 @@ h1.profile{
     width: 316px;
     height: 42px;
     left: 240px;
-    top: 70px;
+    top: 20px;
 
     font-family: Abhaya Libre;
     font-style: normal;
@@ -209,7 +210,7 @@ h3.profile-filter{
     width: 70px;
     height: 21px;
     left: 240px;
-    top: 130px;
+    top: 80px;
 
     font-family: Abhaya Libre;
     font-style: normal;
@@ -225,7 +226,7 @@ h3.profile-view{
     width: 70px;
     height: 21px;
     right: 350px;
-    top: 130px;
+    top: 80px;
 
     font-family: Abhaya Libre Medium;
     font-style: normal;
@@ -241,7 +242,7 @@ button.image-grid{
     width: 30px;
     height: 30px;
     right: 330px;
-    top: 145px;
+    top: 95px;
     border-radius: 20px;
 
     border: none;
@@ -252,7 +253,7 @@ button.image-list{
     width: 30px;
     height: 30px;
     right: 290px;
-    top: 143px;
+    top: 93px;
 
     border: none;
 }
@@ -262,7 +263,7 @@ h1.central-text{
     width: 700px;
     height: 84px;
     left:calc(50% - 350px);
-    top: 240px;
+    top: 190px;
 
     font-family: Abhaya Libre;
     font-style: normal;

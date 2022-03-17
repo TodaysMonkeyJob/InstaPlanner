@@ -8,6 +8,7 @@ from random_user_agent.params import SoftwareName, OperatingSystem
 from random_user_agent.user_agent import UserAgent
 from selenium.webdriver.chrome.options import Options
 
+from app.s3_help_functions import read_json_cookies_s3, final_file_cheker
 from app.scenarious.get_profile_info import GetUserInfo
 from app.scenarious.save_photos import InstaSavePhoto
 from constans import *
@@ -36,14 +37,16 @@ class IntaLogin:
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument(f"user-agent={user_agent}")
-        cookies_file_path = f'app/profiles/{self.username}/cookies/user_cookies.json'
+        cookies_local_file_path = f'app/tmp/{self.username}_cookies.json'
+        cookies_s3_file_path = f'profile/{self.username}/cookies/{self.username}_cookies.json'
         cookie_websites = ['https://Instagram.com']
-        self.cookies_file_path = cookies_file_path
+        self.cookies_s3_file_path = cookies_s3_file_path
+        self.cookies_local_file_path = cookies_local_file_path
         self.cookie_websites = cookie_websites
         self.driver = webdriver.Chrome(ChromeDriverManager().install())
         try:
             # Load in cookies for the website
-            cookies = json.load(open(self.cookies_file_path, "rb"))
+            cookies = read_json_cookies_s3(self.username)
             for website in self.cookie_websites:
                 self.driver.get(website)
                 for cookie in cookies:
@@ -62,10 +65,11 @@ class IntaLogin:
             scenario.download_content()
 
     def save_cookies(self):
-        json.dump(self.driver.get_cookies(), open(self.cookies_file_path, "w"))
+        json.dump(self.driver.get_cookies(), open(self.cookies_local_file_path, "w"))
+        final_file_cheker(self.cookies_local_file_path, self.cookies_s3_file_path)
 
     def load_cookies(self):
-        cookies = json.load(open(self.cookies_file_path, "rb"))
+        cookies = read_json_cookies_s3(self.username)
         for cookie in cookies:
             self.driver.add_cookie(cookie)
 
@@ -86,11 +90,9 @@ class IntaLogin:
 
     def turn_off_notification(self):
         try:
-            self.driver.implicitly_wait(self.small_pause)
             self.driver.find_element(By.XPATH, NOTIFICATIONS_OFF_BUTTON_1).click()
         except Exception as e:
             print(e)
-            self.driver.implicitly_wait(self.small_pause)
             self.driver.find_element(By.XPATH, NOTIFICATIONS_OFF_BUTTON_2).click()
 
     def login_button(self):

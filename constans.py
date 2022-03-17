@@ -2,6 +2,9 @@
 INSTAGRAM = 'https://www.instagram.com/'
 INSTAGRAM_LOGIN = 'https://www.instagram.com/accounts/login/'
 
+# BUCKET NAME
+BUCKET_NAME = 'iplanner-photo-saver'
+
 # USER CREDENTIAL
 USERNAME = "blck_n_brwn"
 PASSWORD = "Oleh1601,"
@@ -51,5 +54,8 @@ PROFILE_USERNAME_H2 = '//*[@id="react-root"]/section/main/div/header/section/div
 PROFILE_POSTS = '//*[@id="react-root"]/section/main/div/header/section/ul/li[1]/div/span'
 PROFILE_FOLLOWERS = '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a/div/span'
 PROFILE_FOLLOWING = '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/div/span'
-PROFILE_PHOTO_POSTS = '//*[@id="react-root"]/section/main/div/div[1]/article/div/div[1]/div/div/div[1]/div[1]/img'
-PROFILE_VIDEO_POSTS = '//*[@id="react-root"]/section/main/div/div[1]/article/div/div[1]/div/div/div/div/div/video'
+PROFILE_PHOTO_POSTS_1 = '//*[@id="react-root"]/section/main/div/div[1]/article/div/div[1]/div/div/div[1]/div[1]/img'
+PROFILE_PHOTO_POSTS_2 = '//*[@id="react-root"]/section/main/div/div[1]/article/div/div[2]/div/div/div[1]/img'
+PROFILE_PHOTO_POSTS_3 = '//*[@id="react-root"]/section/main/div/div[1]/article/div/div[1]/div/div/div[1]/img'
+PROFILE_VIDEO_POSTS_1 = '//*[@id="react-root"]/section/main/div/div[1]/article/div/div[1]/div/div/div/div/div/video'
+PROFILE_VIDEO_POSTS_2 = '//*[@id="react-root"]/section/main/div/div[1]/article/div/div[2]/div/div/div[1]/div/div/video'

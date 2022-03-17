@@ -148,6 +148,15 @@ class Profile(db.Model):
     following = db.Column(db.String(64))
     avatars = db.Column(db.String(256))
 
+
+class Posts(db.Model):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    post_id = db.Column(db.String(256), unique=True)
+    post_likes = db.Column(db.String(64))
+    post_comments = db.Column(db.String(64))
+
     # password_hash = db.deferred(db.Column(db.String(128)))
     #
     # @property

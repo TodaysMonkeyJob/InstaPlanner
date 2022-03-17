@@ -39,12 +39,12 @@ class GetUserInfo:
         self.driver.implicitly_wait(self.small_pause)
         logo = self.driver.find_element(By.XPATH, PROFILE_IMAGE)
         src = logo.get_attribute('src')
-        urllib.request.urlretrieve(src, f"/home/oleh/PyProjects/instaPlanner/app/static/img/{self.profile_username}.jpg")
+        urllib.request.urlretrieve(src, f"app/static/img/{self.profile_username}.jpg")
         sleep(5)
 
 
     def save_user_info(self):
         user_info = {'username': self.profile_username, 'posts': self.posts,
                      'followers': self.followers, 'following': self.following}
-        with open(f'/home/oleh/PyProjects/instaPlanner/app/json_data/{self.profile_username}.json', 'w') as file:
+        with open(f'app/info_data/{self.profile_username}.json', 'w') as file:
             json.dump(user_info, file)
