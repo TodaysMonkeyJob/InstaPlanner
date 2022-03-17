@@ -2,6 +2,9 @@
 INSTAGRAM = 'https://www.instagram.com/'
 INSTAGRAM_LOGIN = 'https://www.instagram.com/accounts/login/'
 
+# BUCKET NAME
+BUCKET_NAME = 'iplanner-photo-saver'
+
 # USER CREDENTIAL
 USERNAME = "blck_n_brwn"
 PASSWORD = "Oleh1601,"

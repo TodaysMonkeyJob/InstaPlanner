@@ -147,7 +147,7 @@ button.enter{
         <tr class="animated fadeIn delay">
             <td class="image-setter" rowspan="4">
                 {%- if profile.avatars -%}
-                    <img class="profile-border" src="/../{{ profile.avatars }}" >
+                    <img class="profile-border" src="https://iplanner-photo-saver.s3.eu-central-1.amazonaws.com/profile/{{ profile.name }}/profile-photo/{{ profile.name }}.jpg" >
                 {%- else -%}
                     <img class="profile-border" src="/../static/img/empty.jpg" >
                 {%- endif -%}
@@ -181,8 +181,8 @@ button.enter{
 <hr align="center" width=62% size="200" color="#ff0000" />
 <div>
 <main class="grid">
-    {%- for posts in post -%}
-        <img src="/../static/{{ profile.name }}/{{ posts.post_id }}" >
+    {%- for photo_ids in photo_id -%}
+        <img src="https://iplanner-photo-saver.s3.eu-central-1.amazonaws.com/profile/{{ profile.name }}/profile-photo/{{ photo_ids }}" >
     {%- endfor -%}
 </main>
 </div>
