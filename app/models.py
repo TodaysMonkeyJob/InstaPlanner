@@ -3,7 +3,7 @@ import json
 from datetime import datetime, timedelta
 
 import bleach
-from app import db, lm, avatars
+from app import db, lm
 from flask import current_app, url_for
 from flask_login import UserMixin, AnonymousUserMixin
 from markdown import markdown
@@ -56,18 +56,6 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.email
-
-
-    def avatar_url(self, _external=False):
-        if self.avatar:
-            avatar_json = json.loads(self.avatar)
-            if avatar_json['use_out_url']:
-                return avatar_json['url']
-            else:
-                return url_for('_uploads.uploaded_file', setname=avatars.name, filename=avatar_json['url'],
-                               _external=_external)
-        else:
-            return url_for('static', filename='img/avatar.png', _external=_external)
 
     @staticmethod
     def on_changed_about_me(target, value, oldvalue, initiaor):

@@ -52,7 +52,6 @@ font-family: 'Abhaya Libre';
 font-style: normal;
 font-weight: 700;
 font-size: 28px;
-word-spacing: 4cm;
 padding-left: 40px;
 }
 
@@ -137,6 +136,16 @@ button.enter{
   width: 350px;
   height: 350px;
 }
+button.refresh-button{
+    background-color: #F2F2F2;
+    border: None;
+}
+
+img.refresh-setter{
+    height:30px;
+    weight:30px;
+
+}
 
 </style>
 {%- if current_user.is_authenticated -%}
@@ -147,9 +156,10 @@ button.enter{
         <tr class="animated fadeIn delay">
             <td class="image-setter" rowspan="4">
                 {%- if profile.avatars -%}
-                    <img class="profile-border" src="https://iplanner-photo-saver.s3.eu-central-1.amazonaws.com/profile/{{ profile.name }}/profile-photo/{{ profile.name }}.jpg" >
+                <img class="profile-border"
+                     src="https://iplanner-photo-saver.s3.eu-central-1.amazonaws.com/profile/{{ profile.name }}/profile-photo/{{ profile.name }}.jpg">
                 {%- else -%}
-                    <img class="profile-border" src="/../static/img/empty.jpg" >
+                <img class="profile-border" src="/../static/img/empty.jpg">
                 {%- endif -%}
             </td>
         </tr>
@@ -157,18 +167,21 @@ button.enter{
             <th class="name-setter" colspan="4">
                 <p class="name-setter">
                     <br>{{ profile.name }}
+                    <button class="refresh-button" onclick="window.location.href='{{ url_for('profile.update_user_posts',name=profile.name) }}';">
+                        <img class="refresh-setter" src="/../static/img/refresh_icon.png" >
+                    </button>
                 </p>
             </th>
         </tr>
 
         <tr>
             <td class="back-setter"><h3 class="post-setter">Posts: {{ profile.post }}</h3></td>
-             <td class="back-setter"><h3 class="info-setter">Followers: {{ profile.follower }}</h3></td>
-             <td class="back-setter"><h3 class="info-setter">Following: {{ profile.following }}</h3></td>
+            <td class="back-setter"><h3 class="info-setter">Followers: {{ profile.follower }}</h3></td>
+            <td class="back-setter"><h3 class="info-setter">Following: {{ profile.following }}</h3></td>
             <td class="empty-space">text to fill space</td>
         </tr>
         <tr>
-            <th class="statistic-setter"  colspan="4">
+            <th class="statistic-setter" colspan="4">
                 <h3 class="statistic-setter">
                     <br><br><br>
                 </h3>
@@ -178,14 +191,16 @@ button.enter{
     </table>
 </div>
 <br>
-<hr align="center" width=62% size="200" color="#ff0000" />
+<hr align="center" width=62% size="200" color="#ff0000"/>
 <div>
-<main class="grid">
-    {%- for photo_ids in photo_id -%}
-        <img src="https://iplanner-photo-saver.s3.eu-central-1.amazonaws.com/profile/{{ profile.name }}/profile-photo/{{ photo_ids }}" >
-    {%- endfor -%}
-</main>
+    <main class="grid" method="GET">
+        {%- for photo_ids in photo_id -%}
+        <img src="https://iplanner-photo-saver.s3.eu-central-1.amazonaws.com/profile/{{ profile.name }}/profile-photo/{{ photo_ids }}">
+        {%- endfor -%}
+    </main>
 </div>
+
+
 
 {%- endif -%}
 {%- endblock -%}
