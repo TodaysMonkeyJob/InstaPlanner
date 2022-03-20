@@ -36,6 +36,7 @@ class IntaLogin:
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-gpu")
+        chrome_options.headless = True
         chrome_options.add_argument(f"user-agent={user_agent}")
         cookies_local_file_path = f'app/tmp/{self.username}_cookies.json'
         cookies_s3_file_path = f'profile/{self.username}/cookies/{self.username}_cookies.json'
@@ -43,7 +44,7 @@ class IntaLogin:
         self.cookies_s3_file_path = cookies_s3_file_path
         self.cookies_local_file_path = cookies_local_file_path
         self.cookie_websites = cookie_websites
-        self.driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
         try:
             # Load in cookies for the website
             cookies = read_json_cookies_s3(self.username)
@@ -58,7 +59,7 @@ class IntaLogin:
 
     def switch(self):
         if self.task == "get_user_data":
-            scenario = GetUserInfo(self.driver)
+            scenario = GetUserInfo(self.driver, self.username)
             scenario.user_profile()
         if self.task == "save_user_photos":
             scenario = InstaSavePhoto(self.driver, self.username)
@@ -103,14 +104,11 @@ class IntaLogin:
         if 'Instagram' in self.driver.title:
             print('Already logged in.')
             sleep(1.2)
-            self.turn_off_notification()
             self.switch()
         else:
             self.connect_to_instagram()
             self.input_username()
             self.input_password()
             self.login_button()
-            self.switch_to_home_tab()
-            self.turn_off_notification()
             self.save_cookies()
             self.switch()

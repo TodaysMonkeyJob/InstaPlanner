@@ -275,6 +275,39 @@ h1.central-text{
     color: #000000;
 }
 
+h1.central-text-index_main{
+    position: absolute;
+    width: 900px;
+    height: 84px;
+    left:calc(50% - 450px);
+    top: 170px;
+
+    font-family: Abhaya Libre;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 42px;
+    text-align: center;
+
+    color: #000000;
+}
+
+h1.central-text-index_secondary{
+    position: absolute;
+    width: 900px;
+    height: 84px;
+    left:calc(50% - 450px);
+    top: 200px;
+
+    font-family: Abhaya Libre;
+    font-style: normal;
+    font-size: 48px;
+    line-height: 42px;
+    text-align: center;
+
+    color: #000000;
+}
+
 .icon > svg {
     display: inline-block;
     width: 16px;

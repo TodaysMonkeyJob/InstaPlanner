@@ -53,8 +53,19 @@ font-family: 'Abhaya Libre';
 font-style: normal;
 font-weight: 700;
 font-size: 28px;
-word-spacing: 4cm;
 padding-left: 40px;
+
+}
+
+img.favorite-setter{
+    height:35px;
+    weight:35px;
+    }
+
+img.refresh-setter{
+    height:30px;
+    weight:30px;
+    padding-left: 5px;
 }
 
 h3.post-setter{
@@ -164,6 +175,18 @@ a.nav-3:hover {
     color: #839B97;
 }
 
+button.refresh-button{
+    background-color: #FFFFFF;
+    border: None;
+}
+
+button.favorite-button{
+    background-color: #FFFFFF;
+    border: None;
+        float: right;
+    margin:10px 80px 0 0;
+}
+
 </style>
 {%- if current_user.is_authenticated -%}
 
@@ -212,7 +235,14 @@ a.nav-3:hover {
             <th class="name-setter" colspan="4">
                 <p class="name-setter">
                     {{ profile.name }}
+                    <button class="refresh-button" onclick="window.location.href='{{ url_for('profile.update_user_info',name=profile.name) }}';">
+                        <img class="refresh-setter" src="/../static/img/refresh_icon.png" >
+                    </button>
+                    <button class="favorite-button">
+                        <img class="favorite-setter" src="/../static/img/favorit.png" >
+                    </button>
                 </p>
+
             </th>
         </tr>
         <tr>
@@ -236,12 +266,14 @@ a.nav-3:hover {
     </table>
 </div>
 
+
 <div class="bottom">
     {% if pagination and pagination.pages > 1 %}
     <div class="container-fluid text-center">
         {{ render_pagination(pagination) }}
     </div>
 </div>
+
 {%- endif -%}
 {%- endif -%}
 {% endif %}

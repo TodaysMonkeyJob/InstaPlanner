@@ -19,12 +19,11 @@ class InstaSavePhoto:
         self.posts_urls_extra = list()
         self.post_id_list = list()
         self.img_and_video_src_urls = list()
+        self.post_url_path = f'app/tmp/{self.username}_urls.txt'
 
     def load_user_profile(self):
-        switch_step = [USER_PROFILE_SUBMENU, USER_PROFILE_IN_SUBMENU]
-        for step in switch_step:
-            self.driver.implicitly_wait(self.small_pause)
-            self.driver.find_element(By.XPATH, step).click()
+        self.driver.implicitly_wait(self.small_pause)
+        self.driver.get(INSTAGRAM+self.username+'/')
 
     def xpath_exists(self, path):
         try:
@@ -45,7 +44,9 @@ class InstaSavePhoto:
 
     def get_all_posts_urls(self):
         print("User found")
+        self.driver.implicitly_wait(self.small_pause)
         loops_count = self.get_loop_count()
+        print(f"total loops: {loops_count}")
         for i in range(0, loops_count):
             hrefs = self.driver.find_elements(By.TAG_NAME, 'a')
             hrefs = [item.get_attribute('href') for item in hrefs if "/p/" in item.get_attribute('href')]
@@ -53,11 +54,9 @@ class InstaSavePhoto:
                 self.posts_urls.append(href)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(random.randrange(2, 4))
-        post_url_path = f'app/tmp/{self.username}_urls.txt'
-        with open(post_url_path, 'w') as file:
+        with open(self.post_url_path, 'w') as file:
             for post_url in self.posts_urls:
                 file.write(post_url + "\n")
-        final_file_cheker(post_url_path, f"profile/{self.username}/{self.username}_urls.txt")
 
     def save_helper(self, path, post_id):
         try:
@@ -75,6 +74,8 @@ class InstaSavePhoto:
         print("Find active posts")
         old_post_url = read_posts_url(self.username, f'{self.username}_urls.txt')
         new_posts_url = [x for x in self.posts_urls if x not in old_post_url]
+        print(f"Found {len(new_posts_url)} new posts")
+        final_file_cheker(self.post_url_path, f"profile/{self.username}/{self.username}_urls.txt")
         post_id_path = f'app/tmp/{self.username}_post_id.txt'
         with open(post_id_path, 'w') as file:
             for post_ids in self.posts_urls:
@@ -109,7 +110,6 @@ class InstaSavePhoto:
                     print(e)
                     self.close_driver()
             self.close_driver()
-        return len(urls)
 
     def download_content(self):
         self.load_user_profile()
