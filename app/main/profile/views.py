@@ -1,12 +1,12 @@
-from flask import render_template, flash, request, jsonify
+from flask import render_template, flash, request
 
 from app import db
-from app.models import Profile, Posts
+from app.models import Profile
 from app.scenarious.scenario_selector import launch_scenario
 from . import profile
-from .forms import LoginForm
+from .forms import LoginForm, PostForm
 from .forms import SearchForm
-from ...s3_help_functions import read_json_user_info_s3, read_posts_url, read_user_info_s3
+from ...s3_help_functions import read_json_user_info_s3, read_posts_url
 
 
 @profile.route('/', methods=['GET', 'POST'])
@@ -47,18 +47,41 @@ def add_profile():
 @profile.route('/<name>/', methods=['GET'])
 def show_profile(name):
     search_form = SearchForm()
-    photo_id = list()
     posts_id = read_posts_url(name, f'{name}_post_id.txt')
-    for post_id in posts_id:
-        post_id = post_id.split('\n')[0]
-        photo_id.append(post_id)
+    photo_id = [post_id.split('\n')[0] for post_id in posts_id]
     profile = Profile.query.filter_by(name=name).first_or_404()
     return render_template('show_profile.html', profile=profile, photo_id=photo_id, search_form=search_form)
 
+@profile.route('/<name>/add_post', methods=['GET', 'POST'])
+def add_post(name):
+    return render_template("add_post.html", title=u"Add new instagram post")
+
+
 @profile.route('/<name>/user_info', methods=['GET'])
 def update_user_info(name):
+    update_data(name)
+    search_form = SearchForm()
+    page = request.args.get('page', 1, type=int)
+    the_profiles = Profile.query
+    pagination = the_profiles.paginate(page, per_page=8)
+    result_profiles = pagination.items
+    return render_template("profile_list.html", profiles=result_profiles, pagination=pagination,
+                           search_form=search_form, title=u"List of info_data")
+
+
+@profile.route('/<name>/user_posts_info', methods=['GET'])
+def update_user_posts(name):
+    update_data(name)
+    search_form = SearchForm()
+    posts_id = read_posts_url(name, f'{name}_post_id.txt')
+    photo_id = [post_id.split('\n')[0] for post_id in posts_id]
     profile = Profile.query.filter_by(name=name).first_or_404()
+    return render_template('show_profile.html', profile=profile, photo_id=photo_id, search_form=search_form)
+
+
+def update_data(name):
     try:
+        profile = Profile.query.filter_by(name=name).first_or_404()
         launch_scenario(profile.name, profile.password, "get_user_data")
         profile_data = read_json_user_info_s3(profile.name)
         profile.post = profile_data["posts"]
@@ -67,28 +90,5 @@ def update_user_info(name):
         db.session.commit()
     except Exception as e:
         print(e)
-    search_form = SearchForm()
-    page = request.args.get('page', 1, type=int)
-    the_profiles = Profile.query
-    pagination = the_profiles.paginate(page, per_page=8)
-    result_profiles = pagination.items
-    return render_template("profile_list.html", profiles=result_profiles, pagination=pagination,
-                           search_form=search_form,
-                           title=u"List of info_data")
 
-@profile.route('/<name>/user_posts_info', methods=['GET'])
-def update_user_posts(name):
-    try:
-        profile = Profile.query.filter_by(name=name).first_or_404()
-        launch_scenario(profile.name, profile.password, "save_user_photos")
-    except Exception as e:
-        print(e)
 
-    search_form = SearchForm()
-    photo_id = list()
-    posts_id = read_posts_url(name, f'{name}_post_id.txt')
-    for post_id in posts_id:
-        post_id = post_id.split('\n')[0]
-        photo_id.append(post_id)
-    profile = Profile.query.filter_by(name=name).first_or_404()
-    return render_template('show_profile.html', profile=profile, photo_id=photo_id, search_form=search_form)

@@ -112,6 +112,6 @@ class InstaSavePhoto:
             self.close_driver()
 
     def download_content(self):
-        self.load_user_profile()
+        #self.load_user_profile()
         self.get_all_posts_urls()
         self.download_userpage_content(self.new_post_urls())

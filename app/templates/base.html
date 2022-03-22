@@ -37,13 +37,17 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     {%- if current_user.is_authenticated -%}
+                        {%- if (request.url_rule.endpoint == 'profile.show_profile' or request.url_rule.endpoint == 'profile.update_user_posts') -%}
+                        {%- block profile_post -%}{%- endblock -%}
+                        {%- else -%}
                         <li class="nav-1" onclick='f=window.open(href="{{ url_for("profile.add_profile") }}","fenetre","the style (without style tag, example - width=450, height=550, no px")'
                                     style="cursor: pointer;">
-                            <a class="nav-1">Add profile</a></li>
-
+                                <a class="nav-1">Add profile</a></li>
+                            {%- endif -%}
                         <li class="nav-2"> <a class="nav-2" href="{{ url_for('auth.logout') }}">Sign out</a></li>
                     {%- else -%}
-                        <li class="nav-2"> <a class="nav-2" href="{{ url_for('auth.login') }}">Sign in</a></li>
+                        <li class="nav-1"> <a class="nav-sign" href="{{ url_for('auth.login') }}">Sign in</a></li>
+                        <li class="nav-2"> <a class="nav-2" href="{{ url_for('auth.register') }}">Sign up</a></li>
                     {%- endif -%}
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -69,7 +73,8 @@
 
             <span class="line-wrap">Created by <a class="line-wraper" href="https://github.com/TodaysMonkeyJob">Oleh Osadchuk</a>.</span>
         </div>
-    </footer></div>
+    </footer>
+ </div>
 {%- endblock -%}
 
 {%- block scripts -%}

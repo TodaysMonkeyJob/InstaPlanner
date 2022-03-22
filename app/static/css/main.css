@@ -21,6 +21,22 @@ html, body {
     background-color: white;
 }
 
+button.nav-1{
+    display: fixed;
+    flex-direction: column;
+
+    position: absolute;
+    width: 105px;
+    height: 32px;
+    right: calc(90px/2 + 120px);
+    top: -28px;
+
+    border: 1px solid #34626C;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+
 
 li.nav-1{
     display: flex;
@@ -36,7 +52,6 @@ li.nav-1{
     border: 1px solid #34626C;
     box-sizing: border-box;
     border-radius: 5px;
-
 }
 
 a.nav-1{
@@ -51,7 +66,20 @@ a.nav-1{
     color: #34626C;
     box-sizing: border-box;
     border-radius: 5px;
+}
 
+a.nav-sign{
+    position: static;
+    width: 103px;
+
+    font-family: Abhaya Libre;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    color: #34626C;
+    box-sizing: border-box;
+    border-radius: 5px;
 }
 
 li.nav-2{

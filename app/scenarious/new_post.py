@@ -2,31 +2,36 @@ from time import sleep
 
 from selenium.webdriver.common.by import By
 
-from constans import SMALL_PAUSE, NEW_POST, SELECT_PHOTO, MEDIUM_PAUSE, NEW_POST_NEXT, NEW_POST_SHARE, TEST_PHOTO, \
-    CLOSE_POST_SHARING, ADD_PHOTO_TAG_FIELD, ADD_PHOTO_TAG_INPUT, ADD_PHOTO_TAG_SELECT
-from delete_post import DeletePost
+from app.s3_help_functions import download_from_s3
+from constans import *
 
 
 class NewPost:
 
-    def __init__(self, driver):
+    def __init__(self, driver, username):
         self.driver = driver
+        self.username = username
         self.new_photo = TEST_PHOTO
         self.small_pause = SMALL_PAUSE
         self.medium_pause = MEDIUM_PAUSE
 
+    def close_driver(self):
+        self.driver.close()
+        self.driver.quit()
+
     def switch_to_new_post_tab(self):
         self.driver.implicitly_wait(self.small_pause)
-        new_post_button = self.driver.find_element(By.XPATH, NEW_POST)
-        new_post_button.click()
+        self.driver.find_element(By.XPATH, NEW_POST).click()
+        self.add_new_photo()
 
     def add_new_photo(self):
+        download_from_s3('test-photo/CK1VR7wlUdq.jpg')
         self.set_photo()
-        sleep(2)
+        sleep(1.2)
         self.add_tag_to_photo()
-        self.share_photo()
-        sleep(7)
-        self.close_post_sharing()
+        self.move_forward()
+        sleep(3)
+        self.close_driver()
 
     def set_photo(self):
         try:
@@ -35,32 +40,27 @@ class NewPost:
             add_photo_button.send_keys(self.new_photo)
         except Exception as exception:
             print(exception)
-        next_photo_button = self.driver.find_element(By.XPATH, NEW_POST_NEXT)
-        next_photo_button.click()
-        next_photo_button = self.driver.find_element(By.XPATH, NEW_POST_NEXT)
-        next_photo_button.click()
+        self.move_forward()
+        self.move_forward()
+
 
     def add_tag_to_photo(self):
         self.driver.implicitly_wait(self.small_pause)
-        add_tag = self.driver.find_element(By.XPATH, ADD_PHOTO_TAG_FIELD)
-        add_tag.click()
+        self.driver.find_element(By.XPATH, ADD_PHOTO_TAG_FIELD).click()
         self.driver.implicitly_wait(self.small_pause)
-        add_tag = self.driver.find_element(By.XPATH, ADD_PHOTO_TAG_INPUT)
-        add_tag.send_keys("blck_n_brwn")
+        self.driver.find_element(By.XPATH, ADD_PHOTO_TAG_INPUT).send_keys("blck_n_brwn")
         self.driver.implicitly_wait(self.small_pause)
-        add_tag = self.driver.find_element(By.XPATH, ADD_PHOTO_TAG_SELECT)
-        add_tag.click()
+        self.driver.find_element(By.XPATH, ADD_PHOTO_TAG_SELECT).click()
 
-
-
-    def share_photo(self):
-        share_photo_button = self.driver.find_element(By.XPATH, NEW_POST_SHARE)
-        share_photo_button.click()
+    def move_forward(self):
+        self.driver.implicitly_wait(self.small_pause)
+        try:
+            self.driver.find_element(By.XPATH, NEW_POST_NEXT_1).click()
+        except Exception:
+            self.driver.find_element(By.XPATH, NEW_POST_NEXT_2).click()
 
     def close_post_sharing(self):
         try:
-            close_button = self.driver.find_element(By.XPATH, CLOSE_POST_SHARING)
-            close_button.click()
-        except Exception:
-            pass
-        return DeletePost(self.driver)
+            self.driver.find_element(By.XPATH, CLOSE_POST_SHARING).click()
+        except Exception as e:
+            print(e)

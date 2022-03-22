@@ -10,6 +10,7 @@ from selenium.webdriver.chrome.options import Options
 
 from app.s3_help_functions import read_json_cookies_s3, final_file_cheker
 from app.scenarious.get_profile_info import GetUserInfo
+from app.scenarious.new_post import NewPost
 from app.scenarious.save_photos import InstaSavePhoto
 from constans import *
 
@@ -44,7 +45,7 @@ class IntaLogin:
         self.cookies_s3_file_path = cookies_s3_file_path
         self.cookies_local_file_path = cookies_local_file_path
         self.cookie_websites = cookie_websites
-        self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())#, options=chrome_options)
         try:
             # Load in cookies for the website
             cookies = read_json_cookies_s3(self.username)
@@ -61,9 +62,12 @@ class IntaLogin:
         if self.task == "get_user_data":
             scenario = GetUserInfo(self.driver, self.username)
             scenario.user_profile()
-        if self.task == "save_user_photos":
             scenario = InstaSavePhoto(self.driver, self.username)
             scenario.download_content()
+        if self.task == "add_post":
+            self.turn_off_notification()
+            scenario = NewPost(self.driver, self.username)
+            scenario.switch_to_new_post_tab()
 
     def save_cookies(self):
         json.dump(self.driver.get_cookies(), open(self.cookies_local_file_path, "w"))
