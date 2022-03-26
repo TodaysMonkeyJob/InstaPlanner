@@ -135,6 +135,7 @@ a.navbar-brand{
     color: #34626C;
 }
 
+
 .form-control{
     font-family: Abhaya Libre;
     font-style: normal;
@@ -274,6 +275,24 @@ button.image-grid{
     border-radius: 20px;
 
     border: none;
+}
+
+.share-post{
+    padding: 9px 25px;
+
+    position: absolute;
+    width: 340px;
+    height: 60px;
+    bottom: 115px;
+    right: 35px;
+    background: #839B97;
+    border-radius: 10px;
+    font-family: Abhaya Libre;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+    color: #FFFFFF;
 }
 
 button.image-list{

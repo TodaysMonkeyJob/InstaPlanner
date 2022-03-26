@@ -20,14 +20,31 @@ IPlanner
 <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static',filename='css/bootstrap-theme.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static',filename='css/main.css') }}" rel="stylesheet">
+
 {%- endblock -%}
 
 
 {%- block content -%}
+<style>
+.control-label{
+    display: none;
+}
 
-<div class="drop-zone">
+</style>
+<div class="drop-zone" style="width: 80%;float: left;">
     <span class="drop-zone__prompt">Drop image here or click to upload</span>
     <input type="file" name="myFile" class="drop-zone__input" style="display: none;">
+</div>
+<div class="input-zone" style="width: 33%; float: left;">
+        <form method="post" class="form" role="form"  id="certform">
+            <br><br>
+            {{ wtf.form_field(form.description, class='form-control', placeholder='Add description...', style="height: 300px; right: -20px; padding: 9px 25px;") }}
+            <br>
+            {{ wtf.form_field(form.tag_people, class='form-control', placeholder='Add people to tag...', style="height: 40px;right: -20px; padding: 9px 25px;") }}
+            <br>
+            {{ wtf.form_field(form.tag_location, class='form-control', placeholder='Add location...', style="height: 40px;right: -20px; padding: 9px 25px;") }}
+            <button class="share-post" id="submit" name="submit" type="submit" value="Register">Share post</button>
+        </form>
 </div>
 
 {%- endblock -%}
@@ -38,5 +55,9 @@ IPlanner
 <script src="{{ url_for('static',filename='js/main.js') }}"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <script src="https://malsup.github.io/jquery.form.js"></script>
-
+<script>
+   $(document).ready(function () {
+      $('#certform').ajaxForm(function() {window.close();});
+   });
+</script>
 {%- endblock scripts -%}

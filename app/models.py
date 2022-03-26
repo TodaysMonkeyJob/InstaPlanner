@@ -142,6 +142,9 @@ class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     post_id = db.Column(db.String(256), unique=True)
+    description = db.Column(db.String(2200))
+    tag_people = db.Column(db.String(256))
+    tag_location = db.Column(db.String(256))
     post_likes = db.Column(db.String(64))
     post_comments = db.Column(db.String(64))
 

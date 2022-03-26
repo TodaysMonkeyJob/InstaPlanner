@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 {% from "bootstrap/pagination.html" import render_pagination %}
 {% import "bootstrap/wtf.html" as wtf %}
+{%- block profile_post -%}
+<li class="nav-1"
+        onclick='f=window.open(href="{{ url_for("profile.add_post", name=profile.name) }}","fenetre","the style (without style tag, example - width=1100, height=700, no px")'
+        style="cursor: pointer; top: 19px;">
+    <a class="nav-sign">Add post</a>
+</li>
+{% endblock %}
+
 {% block mycontent %}
 
-<button class="nav-1"
-        onclick='f=window.open(href="{{ url_for("profile.add_post", name=profile.name) }}","fenetre","the style (without style tag, example - width=1100, height=700, no px")'
-        style="cursor: pointer;">
-    <a class="nav-sign">Add post</a>
-</button>
+
 
 <style>
 button.add-profile{

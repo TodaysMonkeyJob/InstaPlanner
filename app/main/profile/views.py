@@ -1,7 +1,7 @@
 from flask import render_template, flash, request
 
 from app import db
-from app.models import Profile
+from app.models import Profile, Posts
 from app.scenarious.scenario_selector import launch_scenario
 from . import profile
 from .forms import LoginForm, PostForm
@@ -54,7 +54,19 @@ def show_profile(name):
 
 @profile.route('/<name>/add_post', methods=['GET', 'POST'])
 def add_post(name):
-    return render_template("add_post.html", title=u"Add new instagram post")
+    form = PostForm()
+    if form.validate_on_submit():
+        the_profile = Posts(description=form.description.data, tag_people=form.tag_people.data,
+                            tag_location=form.tag_location.data)
+        try:
+            launch_scenario(the_profile.name, the_profile.password, "get_user_data")
+            db.session.add(the_profile)
+            db.session.commit()
+            flash(u'Registered successfully!')
+            return "<script>window.onload = window.close();</script>"
+        except Exception:
+            return "<script>window.onload = window.close();</script>"
+    return render_template("add_post.html", form=form, title=u"Add new instagram post")
 
 
 @profile.route('/<name>/user_info', methods=['GET'])
