@@ -16,7 +16,6 @@ class InstaSavePhoto:
         self.username = username
         self.small_pause = SMALL_PAUSE
         self.posts_urls = list()
-        self.posts_urls_extra = list()
         self.post_id_list = list()
         self.img_and_video_src_urls = list()
         self.post_url_path = f'app/tmp/{self.username}_urls.txt'
@@ -51,10 +50,13 @@ class InstaSavePhoto:
             hrefs = self.driver.find_elements(By.TAG_NAME, 'a')
             hrefs = [item.get_attribute('href') for item in hrefs if "/p/" in item.get_attribute('href')]
             for href in hrefs:
-                self.posts_urls.append(href)
+                if href not in self.posts_urls:
+                    self.posts_urls.append(href)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(random.randrange(2, 4))
+
         with open(self.post_url_path, 'w') as file:
+            print(len(set(self.posts_urls)))
             for post_url in self.posts_urls:
                 file.write(post_url + "\n")
 
@@ -72,12 +74,16 @@ class InstaSavePhoto:
 
     def new_post_urls(self):
         print("Find active posts")
-        old_post_url = read_posts_url(self.username, f'{self.username}_urls.txt')
+        try:
+            old_post_url = read_posts_url(self.username, f'{self.username}_urls.txt')
+        except Exception:
+            old_post_url = list()
         new_posts_url = [x for x in self.posts_urls if x not in old_post_url]
         print(f"Found {len(new_posts_url)} new posts")
         final_file_cheker(self.post_url_path, f"profile/{self.username}/{self.username}_urls.txt")
         post_id_path = f'app/tmp/{self.username}_post_id.txt'
         with open(post_id_path, 'w') as file:
+            print(len(self.posts_urls))
             for post_ids in self.posts_urls:
                 file.write(post_ids.split("/")[-2] + ".jpg\n")
         final_file_cheker(post_id_path, f"profile/{self.username}/{self.username}_post_id.txt")
@@ -103,7 +109,6 @@ class InstaSavePhoto:
                     else:
                         print("Oops, something went wrong")
                         self.img_and_video_src_urls.append(f"{post_url}, no url!")
-                        self.posts_urls_extra.append(post_url)
                     print(f"Content №{len(urls)} from {post_url} successful download!")
 
                 except Exception as e:
