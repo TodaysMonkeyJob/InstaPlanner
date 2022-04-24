@@ -1,4 +1,7 @@
+import os
+
 from flask import render_template, flash, request
+from werkzeug.utils import secure_filename
 
 from app import db
 from app.models import Profile, Posts
@@ -55,17 +58,17 @@ def show_profile(name):
 @profile.route('/<name>/add_post', methods=['GET', 'POST'])
 def add_post(name):
     form = PostForm()
-    if form.validate_on_submit():
-        the_profile = Posts(description=form.description.data, tag_people=form.tag_people.data,
+    print(form.post_image.data, form.description.data)
+    if form.post_image.data != None:
+        the_post = Posts(post_image=form.post_image.data,
+                            description=form.description.data,
+                            tag_people=form.tag_people.data,
                             tag_location=form.tag_location.data)
-        try:
-            launch_scenario(the_profile.name, the_profile.password, "get_user_data")
-            db.session.add(the_profile)
-            db.session.commit()
-            flash(u'Registered successfully!')
-            return "<script>window.onload = window.close();</script>"
-        except Exception:
-            return "<script>window.onload = window.close();</script>"
+        post_data = form.post_image.data
+        print(post_data)
+        postfile = secure_filename(post_data.filename)
+        post_data.save(os.path.join("app/tmp", postfile))
+        print(form.post_image)
     return render_template("add_post.html", form=form, title=u"Add new instagram post")
 
 

@@ -142,21 +142,13 @@ class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     post_id = db.Column(db.String(256), unique=True)
+    post_image = db.Column(db.String(256))
     description = db.Column(db.String(2200))
     tag_people = db.Column(db.String(256))
     tag_location = db.Column(db.String(256))
     post_likes = db.Column(db.String(64))
     post_comments = db.Column(db.String(64))
 
-    # password_hash = db.deferred(db.Column(db.String(128)))
-    #
-    # @property
-    # def password(self):
-    #     raise AttributeError('password is not readable attribute')
-    # #
-    # @password.setter
-    # def password(self, password):
-    #     self.password_hash = generate_password_hash(password)
 
 
 

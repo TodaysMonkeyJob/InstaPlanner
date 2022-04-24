@@ -16,6 +16,7 @@ IPlanner
 {#    {{ super() }}#}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{{ url_for('static',filename='css/drag.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
 
 <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static',filename='css/bootstrap-theme.min.css') }}" rel="stylesheet">
@@ -30,22 +31,32 @@ IPlanner
     display: none;
 }
 
+.sub-entry {
+    width: 40%;
+    float: left;
+}
+
 </style>
-<div class="drop-zone" style="width: 80%;float: left;">
-    <span class="drop-zone__prompt">Drop image here or click to upload</span>
-    <input type="file" name="myFile" class="drop-zone__input" style="display: none;">
-</div>
-<div class="input-zone" style="width: 33%; float: left;">
-        <form method="post" class="form" role="form"  id="certform">
-            <br><br>
-            {{ wtf.form_field(form.description, class='form-control', placeholder='Add description...', style="height: 300px; right: -20px; padding: 9px 25px;") }}
-            <br>
-            {{ wtf.form_field(form.tag_people, class='form-control', placeholder='Add people to tag...', style="height: 40px;right: -20px; padding: 9px 25px;") }}
-            <br>
-            {{ wtf.form_field(form.tag_location, class='form-control', placeholder='Add location...', style="height: 40px;right: -20px; padding: 9px 25px;") }}
-            <button class="share-post" id="submit" name="submit" type="submit" value="Register">Share post</button>
+<!--<div class="drop-zone" style="width: 80%;float: left;">-->
+<!--    <span class="drop-zone__prompt">Drop image here or click to upload</span>-->
+<!--    <input type="file" name="myFile" class="drop-zone__input" style="display: none;">-->
+<!--</div>-->
+
+        <form method="post" class="form" role="form" id="certform">
+            <div class="drop-zone" >
+        <span class="drop-zone__prompt">Drop image here or click to upload</span>
+            <div style="width: 80%;float: left; ">
+                {{ wtf.form_field(form.post_image, class="drop-zone__input",  style="display: none; bottom: 700px;") }}
+            </div>
+                </div>
+            <div style="width: 35%;float: right;">>
+                {{ wtf.form_field(form.description, class='form-control', placeholder='Add description...', style="height: 250px; right: 20px; bottom: 700px; padding: 9px 25px;") }}
+                {{ wtf.form_field(form.tag_people, class='form-control', placeholder='Add people to tag...', style="height: 40px; right: 20px; bottom: 690px; padding: 9px 25px;") }}
+                {{ wtf.form_field(form.tag_location, class='form-control', placeholder='Add location...', style="height: 40px; right: 20px; bottom: 680px; padding: 9px 25px;") }}
+                <button class="share-post" id="submit" name="submit" type="submit" value="Submit">Share post</button>
+            </div>
         </form>
-</div>
+
 
 {%- endblock -%}
 
@@ -55,6 +66,8 @@ IPlanner
 <script src="{{ url_for('static',filename='js/main.js') }}"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <script src="https://malsup.github.io/jquery.form.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
+
 <script>
    $(document).ready(function () {
       $('#certform').ajaxForm(function() {window.close();});
