@@ -1,8 +1,8 @@
+import glob
+import os
 from time import sleep
 
 from selenium.webdriver.common.by import By
-
-from app.s3_help_functions import download_from_s3
 from constans import *
 
 
@@ -11,7 +11,7 @@ class NewPost:
     def __init__(self, driver, username):
         self.driver = driver
         self.username = username
-        self.new_photo = TEST_PHOTO
+        self.new_photo = None
         self.small_pause = SMALL_PAUSE
         self.medium_pause = MEDIUM_PAUSE
 
@@ -24,8 +24,16 @@ class NewPost:
         self.driver.find_element(By.XPATH, NEW_POST).click()
         self.add_new_photo()
 
+    def check_new_photo(self):
+        filesName = list(map(os.path.basename, glob.glob("/home/oleh/PyProjects/instaPlanner/app/tmp/*jpg")))
+        if len(filesName[0]) > 1:
+            self.new_photo = PHOTO_PATH + filesName[0]
+            print(self.new_photo)
+        else:
+            print("No photo founds")
+
     def add_new_photo(self):
-        download_from_s3('test-photo/CK1VR7wlUdq.jpg')
+        self.check_new_photo()
         self.set_photo()
         sleep(1.2)
         self.add_tag_to_photo()
@@ -40,6 +48,7 @@ class NewPost:
             add_photo_button.send_keys(self.new_photo)
         except Exception as exception:
             print(exception)
+        sleep(1.2)
         self.move_forward()
         self.move_forward()
 
@@ -55,9 +64,9 @@ class NewPost:
     def move_forward(self):
         self.driver.implicitly_wait(self.small_pause)
         try:
-            self.driver.find_element(By.XPATH, NEW_POST_NEXT_1).click()
-        except Exception:
             self.driver.find_element(By.XPATH, NEW_POST_NEXT_2).click()
+        except Exception:
+            self.driver.find_element(By.XPATH, NEW_POST_NEXT_1).click()
 
     def close_post_sharing(self):
         try:

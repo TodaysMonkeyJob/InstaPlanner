@@ -14,7 +14,7 @@ SMALL_PAUSE = 5
 MEDIUM_PAUSE = 15
 LARGE_PAUSE = 30
 
-TEST_PHOTO = '/home/oleh/PyProjects/instaPlanner/app/tmp/CK1VR7wlUdq.jpg'
+PHOTO_PATH = '/home/oleh/PyProjects/instaPlanner/app/tmp/'
 
 # INSTAGRAM XPATH
 USERNAME_XPATH = '//*[@id="loginForm"]/div/div[1]/div/label/input'

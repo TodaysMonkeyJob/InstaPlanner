@@ -58,17 +58,16 @@ def show_profile(name):
 @profile.route('/<name>/add_post', methods=['GET', 'POST'])
 def add_post(name):
     form = PostForm()
-    print(form.post_image.data, form.description.data)
+    profile = Profile.query.filter_by(name=name).first_or_404()
     if form.post_image.data != None:
         the_post = Posts(post_image=form.post_image.data,
                             description=form.description.data,
                             tag_people=form.tag_people.data,
                             tag_location=form.tag_location.data)
         post_data = form.post_image.data
-        print(post_data)
         postfile = secure_filename(post_data.filename)
         post_data.save(os.path.join("app/tmp", postfile))
-        print(form.post_image)
+        launch_scenario(profile.name, profile.password, "add_post")
     return render_template("add_post.html", form=form, title=u"Add new instagram post")
 
 
