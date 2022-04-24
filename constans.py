@@ -14,7 +14,7 @@ SMALL_PAUSE = 5
 MEDIUM_PAUSE = 15
 LARGE_PAUSE = 30
 
-TEST_PHOTO = '/home/oleh/PyProjects/instaPlanner/test_photos/IMG_1355.JPG'
+TEST_PHOTO = '/home/oleh/PyProjects/instaPlanner/app/tmp/CK1VR7wlUdq.jpg'
 
 # INSTAGRAM XPATH
 USERNAME_XPATH = '//*[@id="loginForm"]/div/div[1]/div/label/input'
@@ -31,8 +31,8 @@ FIRST_STORY = '//*[@id="react-root"]/section/main/section/div[1]/div[1]/div[2]/d
 
 # ADD NEW POST
 NEW_POST = '//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[3]/div/button'
-NEW_POST_NEXT = '/html/body/div[6]/div[2]/div/div/div/div[1]/div/div/div[2]/div/button'
-NEW_POST_SHARE = '/html/body/div[6]/div[2]/div/div/div/div[1]/div/div/div[2]/div/button'
+NEW_POST_NEXT_1 = '/html/body/div[6]/div[2]/div/div/div/div[1]/div/div/div[2]/div/button'
+NEW_POST_NEXT_2 = '/html/body/div[6]/div[2]/div/div/div/div[1]/div/div/div[3]/div/button'
 SELECT_PHOTO = '/html/body/div[8]/div[2]/div/div/div/div[2]/div[1]/form/input'
 ADD_PHOTO_TAG_FIELD = '/html/body/div[6]/div[2]/div/div/div/div[2]/div[1]/div/div/div[2]/div/div[1]'
 ADD_PHOTO_TAG_INPUT = '/html/body/div[9]/div/div[2]/div[2]/div/div[1]/div[2]/label/input'

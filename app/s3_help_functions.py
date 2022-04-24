@@ -62,3 +62,5 @@ def final_file_cheker(local_file_name, filename_in_s3):
         os.remove(local_file_name)
     else: print("File not loaded")
 
+def download_from_s3(filename_in_s3):
+    s3.download_file(BUCKET_NAME, filename_in_s3, '/home/oleh/PyProjects/instaPlanner/app/tmp/CK1VR7wlUdq.jpg')

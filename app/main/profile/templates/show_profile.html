@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 {% from "bootstrap/pagination.html" import render_pagination %}
 {% import "bootstrap/wtf.html" as wtf %}
+{%- block profile_post -%}
+<li class="nav-1"
+        onclick='f=window.open(href="{{ url_for("profile.add_post", name=profile.name) }}","fenetre","the style (without style tag, example - width=1100, height=700, no px")'
+        style="cursor: pointer; top: 19px;">
+    <a class="nav-sign">Add post</a>
+</li>
+{% endblock %}
 
 {% block mycontent %}
+
+
 
 <style>
 button.add-profile{
@@ -147,7 +156,10 @@ img.refresh-setter{
 
 }
 
+
 </style>
+
+
 {%- if current_user.is_authenticated -%}
 
 <div id="table-scroll" class="table-scroll">
@@ -167,8 +179,9 @@ img.refresh-setter{
             <th class="name-setter" colspan="4">
                 <p class="name-setter">
                     <br>{{ profile.name }}
-                    <button class="refresh-button" onclick="window.location.href='{{ url_for('profile.update_user_posts',name=profile.name) }}';">
-                        <img class="refresh-setter" src="/../static/img/refresh_icon.png" >
+                    <button class="refresh-button"
+                            onclick="window.location.href='{{ url_for('profile.update_user_posts', name=profile.name) }}';">
+                        <img class="refresh-setter" src="/../static/img/refresh_icon.png">
                     </button>
                 </p>
             </th>
@@ -199,7 +212,6 @@ img.refresh-setter{
         {%- endfor -%}
     </main>
 </div>
-
 
 
 {%- endif -%}
